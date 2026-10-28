@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { cachedGlobal } from '@/lib/globals'
 import { resolveLink } from '@/lib/routes'
 import type { SiteContext } from '@/lib/site'
-import { ThemeSelector } from '@/providers/Theme/ThemeSelector'
 import { IconPin } from './Icons'
 import { makeT } from '@/i18n'
 
@@ -85,7 +84,6 @@ export async function Footer({ ctx }: { ctx: SiteContext }) {
             </li>
           ))}
         </ul>
-        <ThemeSelector />
       </div>
     </footer>
   )
