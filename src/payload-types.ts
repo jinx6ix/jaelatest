@@ -72,6 +72,20 @@ export interface Config {
     media: Media;
     categories: Category;
     users: User;
+    tours: Tour;
+    vehicles: Vehicle;
+    seasons: Season;
+    offers: Offer;
+    hotels: Hotel;
+    'joint-departures': JointDeparture;
+    destinations: Destination;
+    templates: Template;
+    'gallery-items': GalleryItem;
+    inquiries: Inquiry;
+    clients: Client;
+    reviews: Review;
+    'fx-rates': FxRate;
+    countries: Country;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -94,6 +108,20 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
+    tours: ToursSelect<false> | ToursSelect<true>;
+    vehicles: VehiclesSelect<false> | VehiclesSelect<true>;
+    seasons: SeasonsSelect<false> | SeasonsSelect<true>;
+    offers: OffersSelect<false> | OffersSelect<true>;
+    hotels: HotelsSelect<false> | HotelsSelect<true>;
+    'joint-departures': JointDeparturesSelect<false> | JointDeparturesSelect<true>;
+    destinations: DestinationsSelect<false> | DestinationsSelect<true>;
+    templates: TemplatesSelect<false> | TemplatesSelect<true>;
+    'gallery-items': GalleryItemsSelect<false> | GalleryItemsSelect<true>;
+    inquiries: InquiriesSelect<false> | InquiriesSelect<true>;
+    clients: ClientsSelect<false> | ClientsSelect<true>;
+    reviews: ReviewsSelect<false> | ReviewsSelect<true>;
+    'fx-rates': FxRatesSelect<false> | FxRatesSelect<true>;
+    countries: CountriesSelect<false> | CountriesSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -106,18 +134,33 @@ export interface Config {
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
   db: {
-    defaultIDType: string;
+    defaultIDType: number;
   };
-  fallbackLocale: null;
+  fallbackLocale:
+    | ('false' | 'none' | 'null')
+    | false
+    | null
+    | ('en' | 'de' | 'fr' | 'it' | 'hi' | 'zh' | 'ar')
+    | ('en' | 'de' | 'fr' | 'it' | 'hi' | 'zh' | 'ar')[];
   globals: {
     header: Header;
     footer: Footer;
+    'site-settings': SiteSetting;
+    company: Company;
+    theme: Theme;
+    routes: Route;
+    translations: Translation;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
+    company: CompanySelect<false> | CompanySelect<true>;
+    theme: ThemeSelect<false> | ThemeSelect<true>;
+    routes: RoutesSelect<false> | RoutesSelect<true>;
+    translations: TranslationsSelect<false> | TranslationsSelect<true>;
   };
-  locale: null;
+  locale: 'en' | 'de' | 'fr' | 'it' | 'hi' | 'zh' | 'ar';
   widgets: {
     collections: CollectionsWidget;
   };
@@ -156,7 +199,7 @@ export interface UserAuthOperations {
  * via the `definition` "pages".
  */
 export interface Page {
-  id: string;
+  id: number;
   title: string;
   hero: {
     type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact';
@@ -183,11 +226,11 @@ export interface Page {
             reference?:
               | ({
                   relationTo: 'pages';
-                  value: string | Page;
+                  value: number | Page;
                 } | null)
               | ({
                   relationTo: 'posts';
-                  value: string | Post;
+                  value: number | Post;
                 } | null);
             url?: string | null;
             label: string;
@@ -199,15 +242,82 @@ export interface Page {
           id?: string | null;
         }[]
       | null;
-    media?: (string | null) | Media;
+    media?: (number | null) | Media;
   };
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[];
+  layout: (
+    | HomeHeroBlock
+    | TripFinderBlock
+    | WaysToTravelBlock
+    | ToursRailBlock
+    | DeparturesBandBlock
+    | OffersRailBlock
+    | DestinationsRailBlock
+    | ValuePropsBlock
+    | CtaBannerBlock
+    | BlogRailBlock
+    | PageHeaderBlock
+    | RichSectionBlock
+    | StatsStripBlock
+    | FaqSectionBlock
+    | ContactSectionBlock
+    | VehicleGridBlock
+    | MediaGalleryBlock
+    | CallToActionBlock
+    | ContentBlock
+    | MediaBlock
+    | ArchiveBlock
+    | FormBlock
+    | HotelsBlock
+    | IncludedExcluded
+    | VideoBlock
+    | BestTimeBlock
+    | FaqBlock
+    | LinkHubsBlock
+    | TitleBlock
+    | Gallery
+    | FactChips
+    | StickyTabs
+    | Itinerary
+    | Overview
+    | AccessibilitySection
+    | ReviewsBlock
+    | BookingCard
+    | SimilarItems
+    | DepartureList
+    | {
+        title: string;
+        description: string;
+        link?: (number | null) | Page;
+        backgroundColor?: ('gold' | 'primary' | 'background') | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'offerBanner';
+      }
+    | AuthorBox
+    | GroupDiscountTable
+    | HowItWorks
+    | Newsletter
+    | TermsFaq
+    | CtaBand
+    | FeaturesSafety
+    | WhatToExpect
+    | SpecsTable
+    | ToursUsingVehicle
+    | SeatMap
+    | PriceTable
+    | PriceMatrix
+    | PolicyBlock
+    | CategoryTiles
+    | FeaturedTours
+    | DestinationTiles
+    | SocialFeed
+  )[];
   meta?: {
     title?: string | null;
     /**
      * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
      */
-    image?: (string | null) | Media;
+    image?: (number | null) | Media;
     description?: string | null;
   };
   publishedAt?: string | null;
@@ -225,9 +335,9 @@ export interface Page {
  * via the `definition` "posts".
  */
 export interface Post {
-  id: string;
+  id: number;
   title: string;
-  heroImage?: (string | null) | Media;
+  heroImage?: (number | null) | Media;
   content: {
     root: {
       type: string;
@@ -243,18 +353,18 @@ export interface Post {
     };
     [k: string]: unknown;
   };
-  relatedPosts?: (string | Post)[] | null;
-  categories?: (string | Category)[] | null;
+  relatedPosts?: (number | Post)[] | null;
+  categories?: (number | Category)[] | null;
   meta?: {
     title?: string | null;
     /**
      * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
      */
-    image?: (string | null) | Media;
+    image?: (number | null) | Media;
     description?: string | null;
   };
   publishedAt?: string | null;
-  authors?: (string | User)[] | null;
+  authors?: (number | User)[] | null;
   populatedAuthors?:
     | {
         id?: string | null;
@@ -275,8 +385,16 @@ export interface Post {
  * via the `definition` "media".
  */
 export interface Media {
-  id: string;
+  id: number;
+  /**
+   * Describe the picture for people who cannot see it. Also used by search engines.
+   */
   alt?: string | null;
+  /**
+   * Photographer or owner, shown in image search.
+   */
+  creditText?: string | null;
+  copyrightNotice?: string | null;
   caption?: {
     root: {
       type: string;
@@ -292,7 +410,7 @@ export interface Media {
     };
     [k: string]: unknown;
   } | null;
-  folder?: (string | null) | FolderInterface;
+  folder?: (number | null) | FolderInterface;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -368,18 +486,18 @@ export interface Media {
  * via the `definition` "payload-folders".
  */
 export interface FolderInterface {
-  id: string;
+  id: number;
   name: string;
-  folder?: (string | null) | FolderInterface;
+  folder?: (number | null) | FolderInterface;
   documentsAndFolders?: {
     docs?: (
       | {
           relationTo?: 'payload-folders';
-          value: string | FolderInterface;
+          value: number | FolderInterface;
         }
       | {
           relationTo?: 'media';
-          value: string | Media;
+          value: number | Media;
         }
     )[];
     hasNextPage?: boolean;
@@ -394,17 +512,17 @@ export interface FolderInterface {
  * via the `definition` "categories".
  */
 export interface Category {
-  id: string;
+  id: number;
   title: string;
   /**
    * When enabled, the slug will auto-generate from the title field on save and autosave.
    */
   generateSlug?: boolean | null;
   slug: string;
-  parent?: (string | null) | Category;
+  parent?: (number | null) | Category;
   breadcrumbs?:
     | {
-        doc?: (string | null) | Category;
+        doc?: (number | null) | Category;
         url?: string | null;
         label?: string | null;
         id?: string | null;
@@ -418,7 +536,7 @@ export interface Category {
  * via the `definition` "users".
  */
 export interface User {
-  id: string;
+  id: number;
   name?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -427,6 +545,7 @@ export interface User {
   resetPasswordExpiration?: string | null;
   salt?: string | null;
   hash?: string | null;
+  resetPasswordRequestedAt?: string | null;
   loginAttempts?: number | null;
   lockUntil?: string | null;
   sessions?:
@@ -438,6 +557,741 @@ export interface User {
     | null;
   password?: string | null;
   collection: 'users';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HomeHeroBlock".
+ */
+export interface HomeHeroBlock {
+  /**
+   * 0 turns autoplay off.
+   */
+  autoplaySeconds?: number | null;
+  slides?:
+    | {
+        kind: 'image' | 'youtube';
+        /**
+         * The picture, or the poster shown before and instead of the video.
+         */
+        image: number | Media;
+        /**
+         * Paste the YouTube link. It plays muted and loops behind the text.
+         */
+        youtubeUrl?: string | null;
+        headline: string;
+        text?: string | null;
+        /**
+         * Small label, for example the park name.
+         */
+        caption?: string | null;
+        cta: {
+          label: string;
+          /**
+           * Pick a built-in route, or choose Custom URL.
+           */
+          routeKey:
+            | 'custom'
+            | 'home'
+            | 'tours'
+            | 'disabilityTours'
+            | 'budgetTours'
+            | 'migrationTours'
+            | 'joinInTours'
+            | 'offers'
+            | 'vehicleHire'
+            | 'blog'
+            | 'gallery';
+          /**
+           * Used when Route is "Custom URL". Start with / for a page on this site (e.g. /about).
+           */
+          url?: string | null;
+        };
+        secondaryCta?: {
+          label?: string | null;
+          /**
+           * Pick a built-in route, or choose Custom URL.
+           */
+          routeKey?:
+            | (
+                | 'custom'
+                | 'home'
+                | 'tours'
+                | 'disabilityTours'
+                | 'budgetTours'
+                | 'migrationTours'
+                | 'joinInTours'
+                | 'offers'
+                | 'vehicleHire'
+                | 'blog'
+                | 'gallery'
+              )
+            | null;
+          /**
+           * Used when Route is "Custom URL". Start with / for a page on this site (e.g. /about).
+           */
+          url?: string | null;
+        };
+        /**
+         * Overrides the autoplay time for this slide.
+         */
+        durationSeconds?: number | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'homeHero';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TripFinderBlock".
+ */
+export interface TripFinderBlock {
+  /**
+   * Nothing to configure: destinations come from the Destinations collection.
+   */
+  note?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'tripFinder';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "WaysToTravelBlock".
+ */
+export interface WaysToTravelBlock {
+  title: string;
+  subtitle?: string | null;
+  tiles?:
+    | {
+        title: string;
+        text?: string | null;
+        tone?: ('sun' | 'brand' | 'ink') | null;
+        icon?: ('wheelchair' | 'wallet' | 'compass' | 'herd' | 'users' | 'gift') | null;
+        link: {
+          label: string;
+          /**
+           * Pick a built-in route, or choose Custom URL.
+           */
+          routeKey:
+            | 'custom'
+            | 'home'
+            | 'tours'
+            | 'disabilityTours'
+            | 'budgetTours'
+            | 'migrationTours'
+            | 'joinInTours'
+            | 'offers'
+            | 'vehicleHire'
+            | 'blog'
+            | 'gallery';
+          /**
+           * Used when Route is "Custom URL". Start with / for a page on this site (e.g. /about).
+           */
+          url?: string | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'waysToTravel';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ToursRailBlock".
+ */
+export interface ToursRailBlock {
+  title: string;
+  subtitle?: string | null;
+  source?: ('featured' | 'variant' | 'manual') | null;
+  variant?: ('standard' | 'budget' | 'accessible' | 'migration') | null;
+  tours?: (number | Tour)[] | null;
+  limit?: number | null;
+  viewAll?: {
+    label?: string | null;
+    /**
+     * Pick a built-in route, or choose Custom URL.
+     */
+    routeKey?:
+      | (
+          | 'custom'
+          | 'home'
+          | 'tours'
+          | 'disabilityTours'
+          | 'budgetTours'
+          | 'migrationTours'
+          | 'joinInTours'
+          | 'offers'
+          | 'vehicleHire'
+          | 'blog'
+          | 'gallery'
+        )
+      | null;
+    /**
+     * Used when Route is "Custom URL". Start with / for a page on this site (e.g. /about).
+     */
+    url?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'toursRail';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tours".
+ */
+export interface Tour {
+  id: number;
+  title: string;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  published?: boolean | null;
+  featured?: boolean | null;
+  /**
+   * Sample content. Replace before launch.
+   */
+  sample?: boolean | null;
+  /**
+   * The template decides the page layout, tabs and URL prefix (standard, budget, accessible, migration).
+   */
+  template: number | Template;
+  destination: number | Destination;
+  categories?: (number | Category)[] | null;
+  durationDays: number;
+  summary: string;
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  heroImage: number | Media;
+  highlights?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  facts?: {
+    startPoint?: string | null;
+    endPoint?: string | null;
+    pace?: ('easy' | 'moderate' | 'active') | null;
+    groupSizeMin?: number | null;
+    groupSizeMax?: number | null;
+    guideLanguages?: string | null;
+  };
+  itinerary?:
+    | {
+        title: string;
+        body: string;
+        hotel?: (number | null) | Hotel;
+        meals?: ('breakfast' | 'lunch' | 'dinner')[] | null;
+        driveTime?: string | null;
+        mobilityLevel?: ('step-free' | 'assisted' | 'not-suitable') | null;
+        id?: string | null;
+      }[]
+    | null;
+  itineraryPdf?: (number | null) | Media;
+  included?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  excluded?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * All prices are per person in US dollars, stored in cents (76000 = $760).
+   */
+  pricing?: {
+    matrix?:
+      | {
+          season: number | Season;
+          p2: number;
+          p4: number;
+          p6: number;
+          p8: number;
+          id?: string | null;
+        }[]
+      | null;
+    validUntil?: string | null;
+  };
+  gallery?:
+    | {
+        image: number | Media;
+        caption?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Paste a YouTube link. The player only loads when a visitor presses play.
+   */
+  videos?:
+    | {
+        youtubeUrl: string;
+        title: string;
+        description?: string | null;
+        uploadDate?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Budget tours: explain what is shared or simplified.
+   */
+  whyCheaper?: string | null;
+  accessibility?: {
+    summary?: string | null;
+    features?:
+      | {
+          text: string;
+          id?: string | null;
+        }[]
+      | null;
+    vehicle?: (number | null) | Vehicle;
+  };
+  bestTime?:
+    | {
+        months: string;
+        conditions: string;
+        priceLevel?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  faq?:
+    | {
+        question: string;
+        answer: string;
+        id?: string | null;
+      }[]
+    | null;
+  relatedTours?: (number | Tour)[] | null;
+  seo?: {
+    /**
+     * About 60 characters. Leave empty to build one from the title and price.
+     */
+    title?: string | null;
+    /**
+     * About 150 to 160 characters.
+     */
+    description?: string | null;
+    image?: (number | null) | Media;
+    noindex?: boolean | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * A template is the page recipe for a kind of tour: which sections and which tabs, in which order.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "templates".
+ */
+export interface Template {
+  id: number;
+  name: string;
+  variant: 'standard' | 'budget' | 'accessible' | 'migration' | 'specialty' | 'offer';
+  /**
+   * Page sections in display order. Untick Enabled to hide one.
+   */
+  sections?:
+    | {
+        key:
+          | 'facts'
+          | 'highlights'
+          | 'tabs'
+          | 'whyCheaper'
+          | 'accessibility'
+          | 'bestTime'
+          | 'reviews'
+          | 'faq'
+          | 'similar'
+          | 'departures'
+          | 'offerBanner';
+        enabled?: boolean | null;
+        /**
+         * Optional heading override.
+         */
+        title?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Tabs in display order. A tab with no content never shows.
+   */
+  tabs?:
+    | {
+        key:
+          | 'itinerary'
+          | 'inclusions'
+          | 'exclusions'
+          | 'booking'
+          | 'gallery'
+          | 'videos'
+          | 'details'
+          | 'eligible'
+          | 'terms';
+        enabled?: boolean | null;
+        /**
+         * Optional label override.
+         */
+        title?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "destinations".
+ */
+export interface Destination {
+  id: number;
+  name: string;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  country?: ('KE' | 'TZ' | 'UG' | 'RW' | 'other') | null;
+  description?: string | null;
+  image?: (number | null) | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "hotels".
+ */
+export interface Hotel {
+  id: number;
+  name: string;
+  location?: string | null;
+  stars?: number | null;
+  image?: (number | null) | Media;
+  /**
+   * Step-free rooms and paths confirmed.
+   */
+  stepFree?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Every day of the year must belong to exactly one season. A season may run over the new year (for example 1 Nov to 28 Feb).
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "seasons".
+ */
+export interface Season {
+  id: number;
+  name: string;
+  startMonth: number;
+  startDay: number;
+  endMonth: number;
+  endDay: number;
+  /**
+   * Column order in the price table. Low first is usual.
+   */
+  sortOrder?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "vehicles".
+ */
+export interface Vehicle {
+  id: number;
+  name: string;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  published?: boolean | null;
+  sample?: boolean | null;
+  type: 'land-cruiser' | 'extended-land-cruiser' | 'safari-van' | 'rooftop-camper' | 'accessible' | 'transfer';
+  seats: number;
+  summary?: string | null;
+  description?: string | null;
+  heroImage?: (number | null) | Media;
+  gallery?:
+    | {
+        image: number | Media;
+        id?: string | null;
+      }[]
+    | null;
+  features?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  specs?:
+    | {
+        label: string;
+        value: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Indicative rates. Prices in US cents.
+   */
+  rates?:
+    | {
+        label: string;
+        priceCents: number;
+        unit?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Wheelchair lift or ramp fitted.
+   */
+  accessible?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DeparturesBandBlock".
+ */
+export interface DeparturesBandBlock {
+  title: string;
+  subtitle?: string | null;
+  limit?: number | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'departuresBand';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "OffersRailBlock".
+ */
+export interface OffersRailBlock {
+  title: string;
+  limit?: number | null;
+  viewAll?: {
+    label?: string | null;
+    /**
+     * Pick a built-in route, or choose Custom URL.
+     */
+    routeKey?:
+      | (
+          | 'custom'
+          | 'home'
+          | 'tours'
+          | 'disabilityTours'
+          | 'budgetTours'
+          | 'migrationTours'
+          | 'joinInTours'
+          | 'offers'
+          | 'vehicleHire'
+          | 'blog'
+          | 'gallery'
+        )
+      | null;
+    /**
+     * Used when Route is "Custom URL". Start with / for a page on this site (e.g. /about).
+     */
+    url?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'offersRail';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DestinationsRailBlock".
+ */
+export interface DestinationsRailBlock {
+  title: string;
+  subtitle?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'destinationsRail';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ValuePropsBlock".
+ */
+export interface ValuePropsBlock {
+  title: string;
+  text?: string | null;
+  items?:
+    | {
+        title: string;
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'valueProps';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CtaBannerBlock".
+ */
+export interface CtaBannerBlock {
+  title: string;
+  text?: string | null;
+  cta: {
+    label: string;
+    /**
+     * Pick a built-in route, or choose Custom URL.
+     */
+    routeKey:
+      | 'custom'
+      | 'home'
+      | 'tours'
+      | 'disabilityTours'
+      | 'budgetTours'
+      | 'migrationTours'
+      | 'joinInTours'
+      | 'offers'
+      | 'vehicleHire'
+      | 'blog'
+      | 'gallery';
+    /**
+     * Used when Route is "Custom URL". Start with / for a page on this site (e.g. /about).
+     */
+    url?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'ctaBanner';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlogRailBlock".
+ */
+export interface BlogRailBlock {
+  title: string;
+  limit?: number | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'blogRail';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PageHeaderBlock".
+ */
+export interface PageHeaderBlock {
+  title: string;
+  text?: string | null;
+  image?: (number | null) | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'pageHeader';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RichSectionBlock".
+ */
+export interface RichSectionBlock {
+  title?: string | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  image?: (number | null) | Media;
+  imageSide?: ('left' | 'right') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'richSection';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "StatsStripBlock".
+ */
+export interface StatsStripBlock {
+  items?:
+    | {
+        value: string;
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'statsStrip';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FaqSectionBlock".
+ */
+export interface FaqSectionBlock {
+  title: string;
+  items?:
+    | {
+        question: string;
+        answer: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'faqSection';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContactSectionBlock".
+ */
+export interface ContactSectionBlock {
+  title: string;
+  text?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'contactSection';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "VehicleGridBlock".
+ */
+export interface VehicleGridBlock {
+  title?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'vehicleGrid';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MediaGalleryBlock".
+ */
+export interface MediaGalleryBlock {
+  title?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'mediaGallery';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -467,11 +1321,11 @@ export interface CallToActionBlock {
           reference?:
             | ({
                 relationTo: 'pages';
-                value: string | Page;
+                value: number | Page;
               } | null)
             | ({
                 relationTo: 'posts';
-                value: string | Post;
+                value: number | Post;
               } | null);
           url?: string | null;
           label: string;
@@ -517,11 +1371,11 @@ export interface ContentBlock {
           reference?:
             | ({
                 relationTo: 'pages';
-                value: string | Page;
+                value: number | Page;
               } | null)
             | ({
                 relationTo: 'posts';
-                value: string | Post;
+                value: number | Post;
               } | null);
           url?: string | null;
           label: string;
@@ -542,7 +1396,7 @@ export interface ContentBlock {
  * via the `definition` "MediaBlock".
  */
 export interface MediaBlock {
-  media: string | Media;
+  media: number | Media;
   id?: string | null;
   blockName?: string | null;
   blockType: 'mediaBlock';
@@ -569,12 +1423,12 @@ export interface ArchiveBlock {
   } | null;
   populateBy?: ('collection' | 'selection') | null;
   relationTo?: 'posts' | null;
-  categories?: (string | Category)[] | null;
+  categories?: (number | Category)[] | null;
   limit?: number | null;
   selectedDocs?:
     | {
         relationTo: 'posts';
-        value: string | Post;
+        value: number | Post;
       }[]
     | null;
   id?: string | null;
@@ -586,7 +1440,7 @@ export interface ArchiveBlock {
  * via the `definition` "FormBlock".
  */
 export interface FormBlock {
-  form: string | Form;
+  form: number | Form;
   enableIntro?: boolean | null;
   introContent?: {
     root: {
@@ -612,7 +1466,7 @@ export interface FormBlock {
  * via the `definition` "forms".
  */
 export interface Form {
-  id: string;
+  id: number;
   title: string;
   fields?:
     | (
@@ -724,9 +1578,6 @@ export interface Form {
       )[]
     | null;
   submitButtonLabel?: string | null;
-  /**
-   * Choose whether to display an on-page message or redirect to a different page after they submit the form.
-   */
   confirmationType?: ('message' | 'redirect') | null;
   confirmationMessage?: {
     root: {
@@ -746,9 +1597,6 @@ export interface Form {
   redirect?: {
     url: string;
   };
-  /**
-   * Send custom emails when the form submits. Use comma separated lists to send the same email to multiple recipients. To reference a value from this form, wrap that field's name with double curly brackets, i.e. {{firstName}}. You can use a wildcard {{*}} to output all data and {{*:table}} to format it as an HTML table in the email.
-   */
   emails?:
     | {
         emailTo?: string | null;
@@ -757,9 +1605,6 @@ export interface Form {
         replyTo?: string | null;
         emailFrom?: string | null;
         subject: string;
-        /**
-         * Enter the message that should be sent in this email.
-         */
         message?: {
           root: {
             type: string;
@@ -783,10 +1628,813 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HotelsBlock".
+ */
+export interface HotelsBlock {
+  hotels?:
+    | {
+        hotel: number | Hotel;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'hotelsBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IncludedExcluded".
+ */
+export interface IncludedExcluded {
+  included: {
+    item: string;
+    id?: string | null;
+  }[];
+  excluded: {
+    item: string;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'includedExcluded';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "VideoBlock".
+ */
+export interface VideoBlock {
+  videoUrl: string;
+  caption?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'videoBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BestTimeBlock".
+ */
+export interface BestTimeBlock {
+  title: string;
+  description: string;
+  items: {
+    title: string;
+    description: string;
+    link: {
+      label: string;
+      url: string;
+    };
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'bestTimeBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FaqBlock".
+ */
+export interface FaqBlock {
+  title: string;
+  questions: {
+    question: string;
+    answer: string;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'faqBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LinkHubsBlock".
+ */
+export interface LinkHubsBlock {
+  title: string;
+  links: {
+    label: string;
+    url: string;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'linkHubsBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TitleBlock".
+ */
+export interface TitleBlock {
+  title: string;
+  summary?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'titleBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Gallery".
+ */
+export interface Gallery {
+  images: {
+    image: number | Media;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'gallery';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FactChips".
+ */
+export interface FactChips {
+  facts?:
+    | {
+        label: string;
+        value: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'factChips';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "StickyTabs".
+ */
+export interface StickyTabs {
+  tabs?:
+    | {
+        title: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'stickyTabs';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Itinerary".
+ */
+export interface Itinerary {
+  days: {
+    title: string;
+    body: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    hotel?: (number | null) | Hotel;
+    meals?: ('breakfast' | 'lunch' | 'dinner')[] | null;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'itinerary';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Overview".
+ */
+export interface Overview {
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'overview';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AccessibilitySection".
+ */
+export interface AccessibilitySection {
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'accessibilitySection';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ReviewsBlock".
+ */
+export interface ReviewsBlock {
+  title: string;
+  reviews?: (number | null) | Tour;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'reviewsBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BookingCard".
+ */
+export interface BookingCard {
+  mode: 'tour' | 'vehicle' | 'joint';
+  reference?: (number | null) | Tour;
+  tour?: (number | null) | Tour;
+  vehicle?: (number | null) | Vehicle;
+  jointDeparture?: (number | null) | JointDeparture;
+  ctaText?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'bookingCard';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "joint-departures".
+ */
+export interface JointDeparture {
+  id: number;
+  tour: number | Tour;
+  /**
+   * Built from the tour and start date if left empty.
+   */
+  slug?: string | null;
+  published?: boolean | null;
+  sample?: boolean | null;
+  startDate: string;
+  endDate: string;
+  /**
+   * US cents per seat. 56000 = $560.
+   */
+  pricePerSeat: number;
+  totalSeats: number;
+  minGuestsToRun?: number | null;
+  status: 'open' | 'filling' | 'guaranteed' | 'full' | 'cancelled';
+  vehicle?: (number | null) | Vehicle;
+  meetingPoint?: string | null;
+  notes?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SimilarItems".
+ */
+export interface SimilarItems {
+  title: string;
+  tours: (number | Tour)[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'similarItems';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DepartureList".
+ */
+export interface DepartureList {
+  showUpcoming?: boolean | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'departureList';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AuthorBox".
+ */
+export interface AuthorBox {
+  author: number | User;
+  bio?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'authorBox';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "GroupDiscountTable".
+ */
+export interface GroupDiscountTable {
+  discounts?:
+    | {
+        minPeople: number;
+        maxPeople: number;
+        discount: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'groupDiscountTable';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HowItWorks".
+ */
+export interface HowItWorks {
+  steps?:
+    | {
+        title: string;
+        description?: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'howItWorks';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Newsletter".
+ */
+export interface Newsletter {
+  title: string;
+  description?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'newsletter';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TermsFaq".
+ */
+export interface TermsFaq {
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'termsFaq';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CtaBand".
+ */
+export interface CtaBand {
+  title: string;
+  buttonText: string;
+  url: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'ctaBand';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeaturesSafety".
+ */
+export interface FeaturesSafety {
+  items?:
+    | {
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'featuresSafety';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "WhatToExpect".
+ */
+export interface WhatToExpect {
+  items?:
+    | {
+        title: string;
+        description: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'whatToExpect';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SpecsTable".
+ */
+export interface SpecsTable {
+  specs?:
+    | {
+        label: string;
+        value: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'specsTable';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ToursUsingVehicle".
+ */
+export interface ToursUsingVehicle {
+  title: string;
+  tours: (number | Tour)[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'toursUsingVehicle';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SeatMap".
+ */
+export interface SeatMap {
+  imageUrl: string;
+  caption?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'seatMap';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PriceTable".
+ */
+export interface PriceTable {
+  tableData?:
+    | {
+        row?:
+          | {
+              cell?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'priceTable';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PriceMatrix".
+ */
+export interface PriceMatrix {
+  mode: 'manual';
+  currency: string;
+  validUntil?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'priceMatrix';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PolicyBlock".
+ */
+export interface PolicyBlock {
+  title: string;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'policyBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CategoryTiles".
+ */
+export interface CategoryTiles {
+  title: string;
+  categories?:
+    | {
+        title: string;
+        description?: string | null;
+        image?: (number | null) | Media;
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'categoryTiles';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeaturedTours".
+ */
+export interface FeaturedTours {
+  title: string;
+  subtitle?: string | null;
+  tours?: (number | Tour)[] | null;
+  viewAllUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'featuredTours';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DestinationTiles".
+ */
+export interface DestinationTiles {
+  title: string;
+  destinations?:
+    | {
+        title: string;
+        description?: string | null;
+        image?: (number | null) | Media;
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'destinationTiles';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SocialFeed".
+ */
+export interface SocialFeed {
+  title: string;
+  posts?:
+    | {
+        image: number | Media;
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'socialFeed';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "offers".
+ */
+export interface Offer {
+  id: number;
+  name: string;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  published?: boolean | null;
+  featured?: boolean | null;
+  sample?: boolean | null;
+  type: 'early-bird' | 'seasonal' | 'last-minute' | 'group' | 'added-value';
+  /**
+   * Short badge, for example "10% off". Leave empty to build it from the discount.
+   */
+  badgeText?: string | null;
+  summary: string;
+  description?: string | null;
+  heroImage: number | Media;
+  discountType: 'percent' | 'fixed' | 'none';
+  /**
+   * Percent: 10 = 10%. Fixed: cents, 5000 = $50 per person.
+   */
+  discountValue?: number | null;
+  appliesTo: (number | Tour)[];
+  validFrom?: string | null;
+  /**
+   * Last day to book. Expired offers disappear automatically.
+   */
+  validUntil: string;
+  travelFrom?: string | null;
+  travelUntil?: string | null;
+  minGuests?: number | null;
+  howItWorks?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  terms?: string | null;
+  seo?: {
+    title?: string | null;
+    description?: string | null;
+    noindex?: boolean | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "gallery-items".
+ */
+export interface GalleryItem {
+  id: number;
+  title: string;
+  type: 'photo' | 'video';
+  published?: boolean | null;
+  sample?: boolean | null;
+  /**
+   * The photo, or the poster image for a video.
+   */
+  image: number | Media;
+  /**
+   * Paste the YouTube link.
+   */
+  youtubeUrl?: string | null;
+  caption?: string | null;
+  destination?: (number | null) | Destination;
+  sort?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "inquiries".
+ */
+export interface Inquiry {
+  id: number;
+  type: 'tour' | 'offer' | 'vehicle' | 'departure' | 'general';
+  status?: ('new' | 'contacted' | 'quoted' | 'won' | 'lost') | null;
+  name: string;
+  email: string;
+  /**
+   * International format (E.164).
+   */
+  phone?: string | null;
+  countryIso?: string | null;
+  tour?: (number | null) | Tour;
+  offer?: (number | null) | Offer;
+  vehicle?: (number | null) | Vehicle;
+  departure?: (number | null) | JointDeparture;
+  guests?: string | null;
+  travelDate?: string | null;
+  season?: string | null;
+  currency?: string | null;
+  estimateUsdCents?: number | null;
+  message?: string | null;
+  wantsPdf?: boolean | null;
+  consent?: boolean | null;
+  sourcePath?: string | null;
+  locale?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "clients".
+ */
+export interface Client {
+  id: number;
+  name: string;
+  email: string;
+  /**
+   * E.164 phone number e.g. +254712345678
+   */
+  phone: string;
+  country: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reviews".
+ */
+export interface Review {
+  id: number;
+  rating: number;
+  author: string;
+  country: string;
+  date: string;
+  body: string;
+  targetType: 'tour' | 'vehicle';
+  tour?: (number | null) | Tour;
+  source?: string | null;
+  verifiedBooking?: boolean | null;
+  consent: boolean;
+  status: 'pending' | 'approved' | 'rejected';
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "fx-rates".
+ */
+export interface FxRate {
+  id: number;
+  date: string;
+  base: string;
+  rates:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "countries".
+ */
+export interface Country {
+  id: number;
+  name: string;
+  /**
+   * ISO 3166-1 alpha-2 code e.g. KE, TZ, US
+   */
+  iso2: string;
+  /**
+   * Phone dial code e.g. +254, +1
+   */
+  dialCode: string;
+  /**
+   * Show at the top of dropdowns (Kenya, Tanzania, Uganda, Rwanda, UK, USA, Germany)
+   */
+  popular?: boolean | null;
+  sortOrder?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
-  id: string;
+  id: number;
   /**
    * You will need to rebuild the website when changing this field.
    */
@@ -796,11 +2444,11 @@ export interface Redirect {
     reference?:
       | ({
           relationTo: 'pages';
-          value: string | Page;
+          value: number | Page;
         } | null)
       | ({
           relationTo: 'posts';
-          value: string | Post;
+          value: number | Post;
         } | null);
     url?: string | null;
   };
@@ -812,8 +2460,8 @@ export interface Redirect {
  * via the `definition` "form-submissions".
  */
 export interface FormSubmission {
-  id: string;
-  form: string | Form;
+  id: number;
+  form: number | Form;
   submissionData?:
     | {
         field: string;
@@ -831,18 +2479,18 @@ export interface FormSubmission {
  * via the `definition` "search".
  */
 export interface Search {
-  id: string;
+  id: number;
   title?: string | null;
   priority?: number | null;
   doc: {
     relationTo: 'posts';
-    value: string | Post;
+    value: number | Post;
   };
   slug?: string | null;
   meta?: {
     title?: string | null;
     description?: string | null;
-    image?: (string | null) | Media;
+    image?: (number | null) | Media;
   };
   categories?:
     | {
@@ -860,7 +2508,7 @@ export interface Search {
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
-  id: string;
+  id: number;
   key: string;
   data:
     | {
@@ -877,7 +2525,7 @@ export interface PayloadKv {
  * via the `definition` "payload-jobs".
  */
 export interface PayloadJob {
-  id: string;
+  id: number;
   /**
    * Input data provided to the job
    */
@@ -969,52 +2617,108 @@ export interface PayloadJob {
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: string;
+  id: number;
   document?:
     | ({
         relationTo: 'pages';
-        value: string | Page;
+        value: number | Page;
       } | null)
     | ({
         relationTo: 'posts';
-        value: string | Post;
+        value: number | Post;
       } | null)
     | ({
         relationTo: 'media';
-        value: string | Media;
+        value: number | Media;
       } | null)
     | ({
         relationTo: 'categories';
-        value: string | Category;
+        value: number | Category;
       } | null)
     | ({
         relationTo: 'users';
-        value: string | User;
+        value: number | User;
+      } | null)
+    | ({
+        relationTo: 'tours';
+        value: number | Tour;
+      } | null)
+    | ({
+        relationTo: 'vehicles';
+        value: number | Vehicle;
+      } | null)
+    | ({
+        relationTo: 'seasons';
+        value: number | Season;
+      } | null)
+    | ({
+        relationTo: 'offers';
+        value: number | Offer;
+      } | null)
+    | ({
+        relationTo: 'hotels';
+        value: number | Hotel;
+      } | null)
+    | ({
+        relationTo: 'joint-departures';
+        value: number | JointDeparture;
+      } | null)
+    | ({
+        relationTo: 'destinations';
+        value: number | Destination;
+      } | null)
+    | ({
+        relationTo: 'templates';
+        value: number | Template;
+      } | null)
+    | ({
+        relationTo: 'gallery-items';
+        value: number | GalleryItem;
+      } | null)
+    | ({
+        relationTo: 'inquiries';
+        value: number | Inquiry;
+      } | null)
+    | ({
+        relationTo: 'clients';
+        value: number | Client;
+      } | null)
+    | ({
+        relationTo: 'reviews';
+        value: number | Review;
+      } | null)
+    | ({
+        relationTo: 'fx-rates';
+        value: number | FxRate;
+      } | null)
+    | ({
+        relationTo: 'countries';
+        value: number | Country;
       } | null)
     | ({
         relationTo: 'redirects';
-        value: string | Redirect;
+        value: number | Redirect;
       } | null)
     | ({
         relationTo: 'forms';
-        value: string | Form;
+        value: number | Form;
       } | null)
     | ({
         relationTo: 'form-submissions';
-        value: string | FormSubmission;
+        value: number | FormSubmission;
       } | null)
     | ({
         relationTo: 'search';
-        value: string | Search;
+        value: number | Search;
       } | null)
     | ({
         relationTo: 'payload-folders';
-        value: string | FolderInterface;
+        value: number | FolderInterface;
       } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   updatedAt: string;
   createdAt: string;
@@ -1024,10 +2728,10 @@ export interface PayloadLockedDocument {
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: string;
+  id: number;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   key?: string | null;
   value?:
@@ -1047,7 +2751,7 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: string;
+  id: number;
   name?: string | null;
   batch?: number | null;
   updatedAt: string;
@@ -1084,11 +2788,73 @@ export interface PagesSelect<T extends boolean = true> {
   layout?:
     | T
     | {
+        homeHero?: T | HomeHeroBlockSelect<T>;
+        tripFinder?: T | TripFinderBlockSelect<T>;
+        waysToTravel?: T | WaysToTravelBlockSelect<T>;
+        toursRail?: T | ToursRailBlockSelect<T>;
+        departuresBand?: T | DeparturesBandBlockSelect<T>;
+        offersRail?: T | OffersRailBlockSelect<T>;
+        destinationsRail?: T | DestinationsRailBlockSelect<T>;
+        valueProps?: T | ValuePropsBlockSelect<T>;
+        ctaBanner?: T | CtaBannerBlockSelect<T>;
+        blogRail?: T | BlogRailBlockSelect<T>;
+        pageHeader?: T | PageHeaderBlockSelect<T>;
+        richSection?: T | RichSectionBlockSelect<T>;
+        statsStrip?: T | StatsStripBlockSelect<T>;
+        faqSection?: T | FaqSectionBlockSelect<T>;
+        contactSection?: T | ContactSectionBlockSelect<T>;
+        vehicleGrid?: T | VehicleGridBlockSelect<T>;
+        mediaGallery?: T | MediaGalleryBlockSelect<T>;
         cta?: T | CallToActionBlockSelect<T>;
         content?: T | ContentBlockSelect<T>;
         mediaBlock?: T | MediaBlockSelect<T>;
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
+        hotelsBlock?: T | HotelsBlockSelect<T>;
+        includedExcluded?: T | IncludedExcludedSelect<T>;
+        videoBlock?: T | VideoBlockSelect<T>;
+        bestTimeBlock?: T | BestTimeBlockSelect<T>;
+        faqBlock?: T | FaqBlockSelect<T>;
+        linkHubsBlock?: T | LinkHubsBlockSelect<T>;
+        titleBlock?: T | TitleBlockSelect<T>;
+        gallery?: T | GallerySelect<T>;
+        factChips?: T | FactChipsSelect<T>;
+        stickyTabs?: T | StickyTabsSelect<T>;
+        itinerary?: T | ItinerarySelect<T>;
+        overview?: T | OverviewSelect<T>;
+        accessibilitySection?: T | AccessibilitySectionSelect<T>;
+        reviewsBlock?: T | ReviewsBlockSelect<T>;
+        bookingCard?: T | BookingCardSelect<T>;
+        similarItems?: T | SimilarItemsSelect<T>;
+        departureList?: T | DepartureListSelect<T>;
+        offerBanner?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              link?: T;
+              backgroundColor?: T;
+              id?: T;
+              blockName?: T;
+            };
+        authorBox?: T | AuthorBoxSelect<T>;
+        groupDiscountTable?: T | GroupDiscountTableSelect<T>;
+        howItWorks?: T | HowItWorksSelect<T>;
+        newsletter?: T | NewsletterSelect<T>;
+        termsFaq?: T | TermsFaqSelect<T>;
+        ctaBand?: T | CtaBandSelect<T>;
+        featuresSafety?: T | FeaturesSafetySelect<T>;
+        whatToExpect?: T | WhatToExpectSelect<T>;
+        specsTable?: T | SpecsTableSelect<T>;
+        toursUsingVehicle?: T | ToursUsingVehicleSelect<T>;
+        seatMap?: T | SeatMapSelect<T>;
+        priceTable?: T | PriceTableSelect<T>;
+        priceMatrix?: T | PriceMatrixSelect<T>;
+        policyBlock?: T | PolicyBlockSelect<T>;
+        categoryTiles?: T | CategoryTilesSelect<T>;
+        featuredTours?: T | FeaturedToursSelect<T>;
+        destinationTiles?: T | DestinationTilesSelect<T>;
+        socialFeed?: T | SocialFeedSelect<T>;
       };
   meta?:
     | T
@@ -1103,6 +2869,261 @@ export interface PagesSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HomeHeroBlock_select".
+ */
+export interface HomeHeroBlockSelect<T extends boolean = true> {
+  autoplaySeconds?: T;
+  slides?:
+    | T
+    | {
+        kind?: T;
+        image?: T;
+        youtubeUrl?: T;
+        headline?: T;
+        text?: T;
+        caption?: T;
+        cta?:
+          | T
+          | {
+              label?: T;
+              routeKey?: T;
+              url?: T;
+            };
+        secondaryCta?:
+          | T
+          | {
+              label?: T;
+              routeKey?: T;
+              url?: T;
+            };
+        durationSeconds?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TripFinderBlock_select".
+ */
+export interface TripFinderBlockSelect<T extends boolean = true> {
+  note?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "WaysToTravelBlock_select".
+ */
+export interface WaysToTravelBlockSelect<T extends boolean = true> {
+  title?: T;
+  subtitle?: T;
+  tiles?:
+    | T
+    | {
+        title?: T;
+        text?: T;
+        tone?: T;
+        icon?: T;
+        link?:
+          | T
+          | {
+              label?: T;
+              routeKey?: T;
+              url?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ToursRailBlock_select".
+ */
+export interface ToursRailBlockSelect<T extends boolean = true> {
+  title?: T;
+  subtitle?: T;
+  source?: T;
+  variant?: T;
+  tours?: T;
+  limit?: T;
+  viewAll?:
+    | T
+    | {
+        label?: T;
+        routeKey?: T;
+        url?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DeparturesBandBlock_select".
+ */
+export interface DeparturesBandBlockSelect<T extends boolean = true> {
+  title?: T;
+  subtitle?: T;
+  limit?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "OffersRailBlock_select".
+ */
+export interface OffersRailBlockSelect<T extends boolean = true> {
+  title?: T;
+  limit?: T;
+  viewAll?:
+    | T
+    | {
+        label?: T;
+        routeKey?: T;
+        url?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DestinationsRailBlock_select".
+ */
+export interface DestinationsRailBlockSelect<T extends boolean = true> {
+  title?: T;
+  subtitle?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ValuePropsBlock_select".
+ */
+export interface ValuePropsBlockSelect<T extends boolean = true> {
+  title?: T;
+  text?: T;
+  items?:
+    | T
+    | {
+        title?: T;
+        text?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CtaBannerBlock_select".
+ */
+export interface CtaBannerBlockSelect<T extends boolean = true> {
+  title?: T;
+  text?: T;
+  cta?:
+    | T
+    | {
+        label?: T;
+        routeKey?: T;
+        url?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlogRailBlock_select".
+ */
+export interface BlogRailBlockSelect<T extends boolean = true> {
+  title?: T;
+  limit?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PageHeaderBlock_select".
+ */
+export interface PageHeaderBlockSelect<T extends boolean = true> {
+  title?: T;
+  text?: T;
+  image?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RichSectionBlock_select".
+ */
+export interface RichSectionBlockSelect<T extends boolean = true> {
+  title?: T;
+  content?: T;
+  image?: T;
+  imageSide?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "StatsStripBlock_select".
+ */
+export interface StatsStripBlockSelect<T extends boolean = true> {
+  items?:
+    | T
+    | {
+        value?: T;
+        label?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FaqSectionBlock_select".
+ */
+export interface FaqSectionBlockSelect<T extends boolean = true> {
+  title?: T;
+  items?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContactSectionBlock_select".
+ */
+export interface ContactSectionBlockSelect<T extends boolean = true> {
+  title?: T;
+  text?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "VehicleGridBlock_select".
+ */
+export interface VehicleGridBlockSelect<T extends boolean = true> {
+  title?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MediaGalleryBlock_select".
+ */
+export interface MediaGalleryBlockSelect<T extends boolean = true> {
+  title?: T;
+  id?: T;
+  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1190,6 +3211,477 @@ export interface FormBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HotelsBlock_select".
+ */
+export interface HotelsBlockSelect<T extends boolean = true> {
+  hotels?:
+    | T
+    | {
+        hotel?: T;
+        description?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IncludedExcluded_select".
+ */
+export interface IncludedExcludedSelect<T extends boolean = true> {
+  included?:
+    | T
+    | {
+        item?: T;
+        id?: T;
+      };
+  excluded?:
+    | T
+    | {
+        item?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "VideoBlock_select".
+ */
+export interface VideoBlockSelect<T extends boolean = true> {
+  videoUrl?: T;
+  caption?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BestTimeBlock_select".
+ */
+export interface BestTimeBlockSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  items?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        link?:
+          | T
+          | {
+              label?: T;
+              url?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FaqBlock_select".
+ */
+export interface FaqBlockSelect<T extends boolean = true> {
+  title?: T;
+  questions?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LinkHubsBlock_select".
+ */
+export interface LinkHubsBlockSelect<T extends boolean = true> {
+  title?: T;
+  links?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TitleBlock_select".
+ */
+export interface TitleBlockSelect<T extends boolean = true> {
+  title?: T;
+  summary?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Gallery_select".
+ */
+export interface GallerySelect<T extends boolean = true> {
+  images?:
+    | T
+    | {
+        image?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FactChips_select".
+ */
+export interface FactChipsSelect<T extends boolean = true> {
+  facts?:
+    | T
+    | {
+        label?: T;
+        value?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "StickyTabs_select".
+ */
+export interface StickyTabsSelect<T extends boolean = true> {
+  tabs?:
+    | T
+    | {
+        title?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Itinerary_select".
+ */
+export interface ItinerarySelect<T extends boolean = true> {
+  days?:
+    | T
+    | {
+        title?: T;
+        body?: T;
+        hotel?: T;
+        meals?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Overview_select".
+ */
+export interface OverviewSelect<T extends boolean = true> {
+  content?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AccessibilitySection_select".
+ */
+export interface AccessibilitySectionSelect<T extends boolean = true> {
+  content?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ReviewsBlock_select".
+ */
+export interface ReviewsBlockSelect<T extends boolean = true> {
+  title?: T;
+  reviews?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BookingCard_select".
+ */
+export interface BookingCardSelect<T extends boolean = true> {
+  mode?: T;
+  reference?: T;
+  tour?: T;
+  vehicle?: T;
+  jointDeparture?: T;
+  ctaText?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SimilarItems_select".
+ */
+export interface SimilarItemsSelect<T extends boolean = true> {
+  title?: T;
+  tours?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DepartureList_select".
+ */
+export interface DepartureListSelect<T extends boolean = true> {
+  showUpcoming?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AuthorBox_select".
+ */
+export interface AuthorBoxSelect<T extends boolean = true> {
+  author?: T;
+  bio?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "GroupDiscountTable_select".
+ */
+export interface GroupDiscountTableSelect<T extends boolean = true> {
+  discounts?:
+    | T
+    | {
+        minPeople?: T;
+        maxPeople?: T;
+        discount?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HowItWorks_select".
+ */
+export interface HowItWorksSelect<T extends boolean = true> {
+  steps?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Newsletter_select".
+ */
+export interface NewsletterSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TermsFaq_select".
+ */
+export interface TermsFaqSelect<T extends boolean = true> {
+  content?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CtaBand_select".
+ */
+export interface CtaBandSelect<T extends boolean = true> {
+  title?: T;
+  buttonText?: T;
+  url?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeaturesSafety_select".
+ */
+export interface FeaturesSafetySelect<T extends boolean = true> {
+  items?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "WhatToExpect_select".
+ */
+export interface WhatToExpectSelect<T extends boolean = true> {
+  items?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SpecsTable_select".
+ */
+export interface SpecsTableSelect<T extends boolean = true> {
+  specs?:
+    | T
+    | {
+        label?: T;
+        value?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ToursUsingVehicle_select".
+ */
+export interface ToursUsingVehicleSelect<T extends boolean = true> {
+  title?: T;
+  tours?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SeatMap_select".
+ */
+export interface SeatMapSelect<T extends boolean = true> {
+  imageUrl?: T;
+  caption?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PriceTable_select".
+ */
+export interface PriceTableSelect<T extends boolean = true> {
+  tableData?:
+    | T
+    | {
+        row?:
+          | T
+          | {
+              cell?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PriceMatrix_select".
+ */
+export interface PriceMatrixSelect<T extends boolean = true> {
+  mode?: T;
+  currency?: T;
+  validUntil?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PolicyBlock_select".
+ */
+export interface PolicyBlockSelect<T extends boolean = true> {
+  title?: T;
+  content?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CategoryTiles_select".
+ */
+export interface CategoryTilesSelect<T extends boolean = true> {
+  title?: T;
+  categories?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        url?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeaturedTours_select".
+ */
+export interface FeaturedToursSelect<T extends boolean = true> {
+  title?: T;
+  subtitle?: T;
+  tours?: T;
+  viewAllUrl?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DestinationTiles_select".
+ */
+export interface DestinationTilesSelect<T extends boolean = true> {
+  title?: T;
+  destinations?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        url?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SocialFeed_select".
+ */
+export interface SocialFeedSelect<T extends boolean = true> {
+  title?: T;
+  posts?:
+    | T
+    | {
+        image?: T;
+        url?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
@@ -1225,6 +3717,8 @@ export interface PostsSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
+  creditText?: T;
+  copyrightNotice?: T;
   caption?: T;
   folder?: T;
   updatedAt?: T;
@@ -1346,6 +3840,7 @@ export interface UsersSelect<T extends boolean = true> {
   resetPasswordExpiration?: T;
   salt?: T;
   hash?: T;
+  resetPasswordRequestedAt?: T;
   loginAttempts?: T;
   lockUntil?: T;
   sessions?:
@@ -1355,6 +3850,410 @@ export interface UsersSelect<T extends boolean = true> {
         createdAt?: T;
         expiresAt?: T;
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tours_select".
+ */
+export interface ToursSelect<T extends boolean = true> {
+  title?: T;
+  generateSlug?: T;
+  slug?: T;
+  published?: T;
+  featured?: T;
+  sample?: T;
+  template?: T;
+  destination?: T;
+  categories?: T;
+  durationDays?: T;
+  summary?: T;
+  description?: T;
+  heroImage?: T;
+  highlights?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  facts?:
+    | T
+    | {
+        startPoint?: T;
+        endPoint?: T;
+        pace?: T;
+        groupSizeMin?: T;
+        groupSizeMax?: T;
+        guideLanguages?: T;
+      };
+  itinerary?:
+    | T
+    | {
+        title?: T;
+        body?: T;
+        hotel?: T;
+        meals?: T;
+        driveTime?: T;
+        mobilityLevel?: T;
+        id?: T;
+      };
+  itineraryPdf?: T;
+  included?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  excluded?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  pricing?:
+    | T
+    | {
+        matrix?:
+          | T
+          | {
+              season?: T;
+              p2?: T;
+              p4?: T;
+              p6?: T;
+              p8?: T;
+              id?: T;
+            };
+        validUntil?: T;
+      };
+  gallery?:
+    | T
+    | {
+        image?: T;
+        caption?: T;
+        id?: T;
+      };
+  videos?:
+    | T
+    | {
+        youtubeUrl?: T;
+        title?: T;
+        description?: T;
+        uploadDate?: T;
+        id?: T;
+      };
+  whyCheaper?: T;
+  accessibility?:
+    | T
+    | {
+        summary?: T;
+        features?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        vehicle?: T;
+      };
+  bestTime?:
+    | T
+    | {
+        months?: T;
+        conditions?: T;
+        priceLevel?: T;
+        id?: T;
+      };
+  faq?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
+        id?: T;
+      };
+  relatedTours?: T;
+  seo?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        noindex?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "vehicles_select".
+ */
+export interface VehiclesSelect<T extends boolean = true> {
+  name?: T;
+  generateSlug?: T;
+  slug?: T;
+  published?: T;
+  sample?: T;
+  type?: T;
+  seats?: T;
+  summary?: T;
+  description?: T;
+  heroImage?: T;
+  gallery?:
+    | T
+    | {
+        image?: T;
+        id?: T;
+      };
+  features?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  specs?:
+    | T
+    | {
+        label?: T;
+        value?: T;
+        id?: T;
+      };
+  rates?:
+    | T
+    | {
+        label?: T;
+        priceCents?: T;
+        unit?: T;
+        id?: T;
+      };
+  accessible?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "seasons_select".
+ */
+export interface SeasonsSelect<T extends boolean = true> {
+  name?: T;
+  startMonth?: T;
+  startDay?: T;
+  endMonth?: T;
+  endDay?: T;
+  sortOrder?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "offers_select".
+ */
+export interface OffersSelect<T extends boolean = true> {
+  name?: T;
+  generateSlug?: T;
+  slug?: T;
+  published?: T;
+  featured?: T;
+  sample?: T;
+  type?: T;
+  badgeText?: T;
+  summary?: T;
+  description?: T;
+  heroImage?: T;
+  discountType?: T;
+  discountValue?: T;
+  appliesTo?: T;
+  validFrom?: T;
+  validUntil?: T;
+  travelFrom?: T;
+  travelUntil?: T;
+  minGuests?: T;
+  howItWorks?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  terms?: T;
+  seo?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        noindex?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "hotels_select".
+ */
+export interface HotelsSelect<T extends boolean = true> {
+  name?: T;
+  location?: T;
+  stars?: T;
+  image?: T;
+  stepFree?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "joint-departures_select".
+ */
+export interface JointDeparturesSelect<T extends boolean = true> {
+  tour?: T;
+  slug?: T;
+  published?: T;
+  sample?: T;
+  startDate?: T;
+  endDate?: T;
+  pricePerSeat?: T;
+  totalSeats?: T;
+  minGuestsToRun?: T;
+  status?: T;
+  vehicle?: T;
+  meetingPoint?: T;
+  notes?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "destinations_select".
+ */
+export interface DestinationsSelect<T extends boolean = true> {
+  name?: T;
+  generateSlug?: T;
+  slug?: T;
+  country?: T;
+  description?: T;
+  image?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "templates_select".
+ */
+export interface TemplatesSelect<T extends boolean = true> {
+  name?: T;
+  variant?: T;
+  sections?:
+    | T
+    | {
+        key?: T;
+        enabled?: T;
+        title?: T;
+        id?: T;
+      };
+  tabs?:
+    | T
+    | {
+        key?: T;
+        enabled?: T;
+        title?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "gallery-items_select".
+ */
+export interface GalleryItemsSelect<T extends boolean = true> {
+  title?: T;
+  type?: T;
+  published?: T;
+  sample?: T;
+  image?: T;
+  youtubeUrl?: T;
+  caption?: T;
+  destination?: T;
+  sort?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "inquiries_select".
+ */
+export interface InquiriesSelect<T extends boolean = true> {
+  type?: T;
+  status?: T;
+  name?: T;
+  email?: T;
+  phone?: T;
+  countryIso?: T;
+  tour?: T;
+  offer?: T;
+  vehicle?: T;
+  departure?: T;
+  guests?: T;
+  travelDate?: T;
+  season?: T;
+  currency?: T;
+  estimateUsdCents?: T;
+  message?: T;
+  wantsPdf?: T;
+  consent?: T;
+  sourcePath?: T;
+  locale?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "clients_select".
+ */
+export interface ClientsSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  phone?: T;
+  country?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reviews_select".
+ */
+export interface ReviewsSelect<T extends boolean = true> {
+  rating?: T;
+  author?: T;
+  country?: T;
+  date?: T;
+  body?: T;
+  targetType?: T;
+  tour?: T;
+  source?: T;
+  verifiedBooking?: T;
+  consent?: T;
+  status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "fx-rates_select".
+ */
+export interface FxRatesSelect<T extends boolean = true> {
+  date?: T;
+  base?: T;
+  rates?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "countries_select".
+ */
+export interface CountriesSelect<T extends boolean = true> {
+  name?: T;
+  iso2?: T;
+  dialCode?: T;
+  popular?: T;
+  sortOrder?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1636,27 +4535,83 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  * via the `definition` "header".
  */
 export interface Header {
-  id: string;
-  navItems?:
+  id: number;
+  /**
+   * Main menu. Add sub items under a parent to make a dropdown.
+   */
+  items?:
     | {
-        link: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?:
-            | ({
-                relationTo: 'pages';
-                value: string | Page;
-              } | null)
-            | ({
-                relationTo: 'posts';
-                value: string | Post;
-              } | null);
-          url?: string | null;
-          label: string;
-        };
+        label: string;
+        /**
+         * Pick a built-in route, or choose Custom URL.
+         */
+        routeKey:
+          | 'custom'
+          | 'home'
+          | 'tours'
+          | 'disabilityTours'
+          | 'budgetTours'
+          | 'migrationTours'
+          | 'joinInTours'
+          | 'offers'
+          | 'vehicleHire'
+          | 'blog'
+          | 'gallery';
+        /**
+         * Used when Route is "Custom URL". Start with / for a page on this site (e.g. /about).
+         */
+        url?: string | null;
+        children?:
+          | {
+              label: string;
+              /**
+               * Pick a built-in route, or choose Custom URL.
+               */
+              routeKey:
+                | 'custom'
+                | 'home'
+                | 'tours'
+                | 'disabilityTours'
+                | 'budgetTours'
+                | 'migrationTours'
+                | 'joinInTours'
+                | 'offers'
+                | 'vehicleHire'
+                | 'blog'
+                | 'gallery';
+              /**
+               * Used when Route is "Custom URL". Start with / for a page on this site (e.g. /about).
+               */
+              url?: string | null;
+              description?: string | null;
+              id?: string | null;
+            }[]
+          | null;
         id?: string | null;
       }[]
     | null;
+  cta: {
+    label: string;
+    /**
+     * Pick a built-in route, or choose Custom URL.
+     */
+    routeKey:
+      | 'custom'
+      | 'home'
+      | 'tours'
+      | 'disabilityTours'
+      | 'budgetTours'
+      | 'migrationTours'
+      | 'joinInTours'
+      | 'offers'
+      | 'vehicleHire'
+      | 'blog'
+      | 'gallery';
+    /**
+     * Used when Route is "Custom URL". Start with / for a page on this site (e.g. /about).
+     */
+    url?: string | null;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1665,24 +4620,362 @@ export interface Header {
  * via the `definition` "footer".
  */
 export interface Footer {
-  id: string;
-  navItems?:
+  id: number;
+  columns?:
     | {
-        link: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?:
-            | ({
-                relationTo: 'pages';
-                value: string | Page;
-              } | null)
-            | ({
-                relationTo: 'posts';
-                value: string | Post;
-              } | null);
-          url?: string | null;
-          label: string;
-        };
+        title: string;
+        links?:
+          | {
+              label: string;
+              /**
+               * Pick a built-in route, or choose Custom URL.
+               */
+              routeKey:
+                | 'custom'
+                | 'home'
+                | 'tours'
+                | 'disabilityTours'
+                | 'budgetTours'
+                | 'migrationTours'
+                | 'joinInTours'
+                | 'offers'
+                | 'vehicleHire'
+                | 'blog'
+                | 'gallery';
+              /**
+               * Used when Route is "Custom URL". Start with / for a page on this site (e.g. /about).
+               */
+              url?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  legalLinks?:
+    | {
+        label: string;
+        /**
+         * Pick a built-in route, or choose Custom URL.
+         */
+        routeKey:
+          | 'custom'
+          | 'home'
+          | 'tours'
+          | 'disabilityTours'
+          | 'budgetTours'
+          | 'migrationTours'
+          | 'joinInTours'
+          | 'offers'
+          | 'vehicleHire'
+          | 'blog'
+          | 'gallery';
+        /**
+         * Used when Route is "Custom URL". Start with / for a page on this site (e.g. /about).
+         */
+        url?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Use {year} for the current year.
+   */
+  copyright?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings".
+ */
+export interface SiteSetting {
+  id: number;
+  siteName: string;
+  contactEmail: string;
+  /**
+   * Digits only with country code, for example 254700000000
+   */
+  whatsappNumber: string;
+  /**
+   * Opening message for WhatsApp chats.
+   */
+  whatsappMessage?: string | null;
+  /**
+   * Earliest travel date a visitor can pick, in days from today.
+   */
+  minLeadDays?: number | null;
+  /**
+   * For example: We reply within one working day.
+   */
+  replyTime?: string | null;
+  /**
+   * Short reassurance lines. Empty rows are hidden.
+   */
+  trust?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Leave empty to hide the payment line.
+   */
+  paymentMethods?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  cancellationSummary?: string | null;
+  depositSummary?: string | null;
+  /**
+   * The first row is the base currency (rate 1). Rates are units of that currency per 1 US dollar. Update them regularly.
+   */
+  currencies?:
+    | {
+        /**
+         * ISO code, for example USD
+         */
+        code: string;
+        rate: number;
+        rateDate?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  social?:
+    | {
+        platform: 'facebook' | 'instagram' | 'youtube' | 'tiktok' | 'x' | 'linkedin' | 'tripadvisor';
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  seo?: {
+    titleSuffix?: string | null;
+    defaultDescription?: string | null;
+    defaultOgImage?: (number | null) | Media;
+    /**
+     * Full site address used in canonical tags and sitemaps, for example https://jaetravel.co.ke. Leave empty to use NEXT_PUBLIC_SERVER_URL.
+     */
+    canonicalOrigin?: string | null;
+    enableFaqSchema?: boolean | null;
+    googleSiteVerification?: string | null;
+    /**
+     * Google Merchant markup applies to physical goods. Keep OFF for tours and vehicle hire unless you sell physical products.
+     */
+    merchant?: {
+      enabled?: boolean | null;
+    };
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "company".
+ */
+export interface Company {
+  id: number;
+  companyName: string;
+  tagline?: string | null;
+  logo?: (number | null) | Media;
+  phoneNumber: string;
+  address?: {
+    street?: string | null;
+    city?: string | null;
+    region?: string | null;
+    postalCode?: string | null;
+    countryCode?: string | null;
+  };
+  geo?: {
+    lat?: number | null;
+    lng?: number | null;
+  };
+  openingHours?: string | null;
+  /**
+   * Licences, memberships. Empty rows are hidden. Only list real ones.
+   */
+  credentials?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Brand colours and shapes. Every colour on the website comes from here.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "theme".
+ */
+export interface Theme {
+  id: number;
+  /**
+   * Buttons, active tab, highlights (hex, for example #FF7302)
+   */
+  brand: string;
+  /**
+   * Text that sits on the brand colour. Use a dark colour: white on orange is hard to read (hex, for example #201E1F)
+   */
+  onBrand: string;
+  /**
+   * Small text and links on white (hex, for example #B34A00)
+   */
+  accentText: string;
+  /**
+   * The sun yellow (hex, for example #FFDD00)
+   */
+  sun: string;
+  /**
+   * Main text (hex, for example #201E1F)
+   */
+  ink: string;
+  /**
+   * Page background (hex, for example #FFFFFF)
+   */
+  ground: string;
+  /**
+   * Cards (hex, for example #FFFFFF)
+   */
+  surface: string;
+  /**
+   * Soft yellow bands (hex, for example #FFF2C2)
+   */
+  tint: string;
+  /**
+   * Borders (hex, for example #E6D9CB)
+   */
+  line: string;
+  /**
+   * Secondary text (hex, for example #56585B)
+   */
+  muted: string;
+  /**
+   * Secondary text on dark areas (hex, for example #BDB7AE)
+   */
+  soft: string;
+  /**
+   * Dark areas, footer (hex, for example #201E1F)
+   */
+  night: string;
+  /**
+   * Text on dark areas (hex, for example #F7F2EA)
+   */
+  onNight: string;
+  /**
+   * Ticks (hex, for example #2E7D4F)
+   */
+  success: string;
+  /**
+   * Errors and crosses (hex, for example #B3261E)
+   */
+  danger: string;
+  /**
+   * WhatsApp button (hex, for example #25D366)
+   */
+  whatsapp: string;
+  /**
+   * Hex colour, for example #151311
+   */
+  darkGround: string;
+  /**
+   * Hex colour, for example #211F1C
+   */
+  darkSurface: string;
+  /**
+   * Hex colour, for example #1B1917
+   */
+  darkTint: string;
+  /**
+   * Hex colour, for example #F5F1EB
+   */
+  darkInk: string;
+  /**
+   * Hex colour, for example #B8B1A7
+   */
+  darkMuted: string;
+  /**
+   * Hex colour, for example #3A3631
+   */
+  darkLine: string;
+  /**
+   * Hex colour, for example #0F0E0D
+   */
+  darkNight: string;
+  /**
+   * Hex colour, for example #FF9340
+   */
+  darkAccentText: string;
+  /**
+   * Hex colour, for example #6CC38E
+   */
+  darkSuccess: string;
+  /**
+   * Hex colour, for example #FF8A7A
+   */
+  darkDanger: string;
+  /**
+   * Card corner radius in px
+   */
+  radiusCard?: string | null;
+  /**
+   * Large panel corner radius in px
+   */
+  radiusPanel?: string | null;
+  /**
+   * Offset of the bold shadow on the trip finder and booking card, in px. 0 turns it off.
+   */
+  popShadow?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * The first part of each URL. Change a prefix here and every link and sitemap entry follows. Old URLs need a redirect.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "routes".
+ */
+export interface Route {
+  id: number;
+  routes?:
+    | {
+        key:
+          | 'tours'
+          | 'disabilityTours'
+          | 'budgetTours'
+          | 'migrationTours'
+          | 'joinInTours'
+          | 'offers'
+          | 'vehicleHire'
+          | 'blog'
+          | 'gallery';
+        /**
+         * Lowercase letters, numbers and hyphens only, for example budget-tours
+         */
+        prefix: string;
+        breadcrumbLabel: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Small pieces of website text (buttons, labels, messages). Add a row to override the built-in English text or to translate it.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "translations".
+ */
+export interface Translation {
+  id: number;
+  entries?:
+    | {
+        /**
+         * For example booking.submit. The full list is in src/i18n/defaults.ts.
+         */
+        key: string;
+        value: string;
         id?: string | null;
       }[]
     | null;
@@ -1694,19 +4987,29 @@ export interface Footer {
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
-  navItems?:
+  items?:
     | T
     | {
-        link?:
+        label?: T;
+        routeKey?: T;
+        url?: T;
+        children?:
           | T
           | {
-              type?: T;
-              newTab?: T;
-              reference?: T;
-              url?: T;
               label?: T;
+              routeKey?: T;
+              url?: T;
+              description?: T;
+              id?: T;
             };
         id?: T;
+      };
+  cta?:
+    | T
+    | {
+        label?: T;
+        routeKey?: T;
+        url?: T;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1717,18 +5020,192 @@ export interface HeaderSelect<T extends boolean = true> {
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
-  navItems?:
+  columns?:
     | T
     | {
-        link?:
+        title?: T;
+        links?:
           | T
           | {
-              type?: T;
-              newTab?: T;
-              reference?: T;
-              url?: T;
               label?: T;
+              routeKey?: T;
+              url?: T;
+              id?: T;
             };
+        id?: T;
+      };
+  legalLinks?:
+    | T
+    | {
+        label?: T;
+        routeKey?: T;
+        url?: T;
+        id?: T;
+      };
+  copyright?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings_select".
+ */
+export interface SiteSettingsSelect<T extends boolean = true> {
+  siteName?: T;
+  contactEmail?: T;
+  whatsappNumber?: T;
+  whatsappMessage?: T;
+  minLeadDays?: T;
+  replyTime?: T;
+  trust?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  paymentMethods?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  cancellationSummary?: T;
+  depositSummary?: T;
+  currencies?:
+    | T
+    | {
+        code?: T;
+        rate?: T;
+        rateDate?: T;
+        id?: T;
+      };
+  social?:
+    | T
+    | {
+        platform?: T;
+        url?: T;
+        id?: T;
+      };
+  seo?:
+    | T
+    | {
+        titleSuffix?: T;
+        defaultDescription?: T;
+        defaultOgImage?: T;
+        canonicalOrigin?: T;
+        enableFaqSchema?: T;
+        googleSiteVerification?: T;
+        merchant?:
+          | T
+          | {
+              enabled?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "company_select".
+ */
+export interface CompanySelect<T extends boolean = true> {
+  companyName?: T;
+  tagline?: T;
+  logo?: T;
+  phoneNumber?: T;
+  address?:
+    | T
+    | {
+        street?: T;
+        city?: T;
+        region?: T;
+        postalCode?: T;
+        countryCode?: T;
+      };
+  geo?:
+    | T
+    | {
+        lat?: T;
+        lng?: T;
+      };
+  openingHours?: T;
+  credentials?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "theme_select".
+ */
+export interface ThemeSelect<T extends boolean = true> {
+  brand?: T;
+  onBrand?: T;
+  accentText?: T;
+  sun?: T;
+  ink?: T;
+  ground?: T;
+  surface?: T;
+  tint?: T;
+  line?: T;
+  muted?: T;
+  soft?: T;
+  night?: T;
+  onNight?: T;
+  success?: T;
+  danger?: T;
+  whatsapp?: T;
+  darkGround?: T;
+  darkSurface?: T;
+  darkTint?: T;
+  darkInk?: T;
+  darkMuted?: T;
+  darkLine?: T;
+  darkNight?: T;
+  darkAccentText?: T;
+  darkSuccess?: T;
+  darkDanger?: T;
+  radiusCard?: T;
+  radiusPanel?: T;
+  popShadow?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "routes_select".
+ */
+export interface RoutesSelect<T extends boolean = true> {
+  routes?:
+    | T
+    | {
+        key?: T;
+        prefix?: T;
+        breadcrumbLabel?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "translations_select".
+ */
+export interface TranslationsSelect<T extends boolean = true> {
+  entries?:
+    | T
+    | {
+        key?: T;
+        value?: T;
         id?: T;
       };
   updatedAt?: T;
@@ -1756,52 +5233,19 @@ export interface TaskSchedulePublish {
     doc?:
       | ({
           relationTo: 'pages';
-          value: string | Page;
+          value: number | Page;
         } | null)
       | ({
           relationTo: 'posts';
-          value: string | Post;
+          value: number | Post;
         } | null);
     global?: string | null;
-    user?: (string | null) | User;
+    user?: {
+      relationTo: 'users';
+      value: number | User;
+    } | null;
   };
   output?: unknown;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "BannerBlock".
- */
-export interface BannerBlock {
-  style: 'info' | 'warning' | 'error' | 'success';
-  content: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'banner';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "CodeBlock".
- */
-export interface CodeBlock {
-  language?: ('typescript' | 'javascript' | 'css') | null;
-  code: string;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'code';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

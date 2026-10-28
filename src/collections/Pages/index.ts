@@ -1,3 +1,4 @@
+import { siteBlocks } from '@/blocks/site/configs'
 import type { CollectionConfig } from 'payload'
 
 import { authenticated } from '../../access/authenticated'
@@ -6,7 +7,43 @@ import { Archive } from '../../blocks/ArchiveBlock/config'
 import { CallToAction } from '../../blocks/CallToAction/config'
 import { Content } from '../../blocks/Content/config'
 import { FormBlock } from '../../blocks/Form/config'
+import { HotelsBlock } from '../../blocks/HotelsBlock/config'
+import { IncludedExcluded } from '../../blocks/IncludedExcluded/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
+import { OfferBanner } from '../../blocks/OfferBanner/config'
+import { VideoBlock } from '../../blocks/VideoBlock/config'
+import { BestTimeBlock } from '../../blocks/BestTime/config'
+import { FaqBlock } from '../../blocks/FaqBlock/config'
+import { LinkHubsBlock } from '../../blocks/LinkHubs/config'
+import { TitleBlock } from '../../blocks/TitleBlock/config'
+import { Gallery } from '../../blocks/Gallery/config'
+import { FactChips } from '../../blocks/FactChips/config'
+import { StickyTabs } from '../../blocks/StickyTabs/config'
+import { Itinerary } from '../../blocks/Itinerary/config'
+import { Overview } from '../../blocks/Overview/config'
+import { AccessibilitySection } from '../../blocks/AccessibilitySection/config'
+import { ReviewsBlock } from '../../blocks/ReviewsBlock/config'
+import { SimilarItems } from '../../blocks/SimilarItems/config'
+import { BookingCard } from '../../blocks/BookingCard/config'
+import { DepartureList } from '../../blocks/DepartureList/config'
+import { AuthorBoxBlock } from '../../blocks/AuthorBox/config'
+import { GroupDiscountTableBlock } from '../../blocks/GroupDiscountTable/config'
+import { HowItWorksBlock } from '../../blocks/HowItWorks/config'
+import { NewsletterBlock } from '../../blocks/Newsletter/config'
+import { TermsFAQBlock } from '../../blocks/TermsFaq/config'
+import { CtaBandBlock } from '../../blocks/CtaBand/config'
+import { FeaturesSafetyBlock } from '../../blocks/FeaturesSafety/config'
+import { WhatToExpectBlock } from '../../blocks/WhatToExpect/config'
+import { SpecsTableBlock } from '../../blocks/SpecsTable/config'
+import { ToursUsingVehicleBlock } from '../../blocks/ToursUsingVehicle/config'
+import { SeatMapBlock } from '../../blocks/SeatMap/config'
+import { PriceTableBlock } from '../../blocks/PriceTable/config'
+import { PriceMatrixBlock } from '../../blocks/PriceMatrix/config'
+import { PolicyBlockComponent } from '../../blocks/PolicyBlock/config'
+import { CategoryTilesBlock } from '../../blocks/CategoryTiles/config'
+import { FeaturedToursBlock } from '../../blocks/FeaturedTours/config'
+import { DestinationTilesBlock } from '../../blocks/DestinationTiles/config'
+import { SocialFeedBlock } from '../../blocks/SocialFeed/config'
 import { hero } from '@/heros/config'
 import { slugField } from 'payload'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
@@ -72,7 +109,7 @@ export const Pages: CollectionConfig<'pages'> = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [CallToAction, Content, MediaBlock, Archive, FormBlock],
+              blocks: [...siteBlocks, CallToAction, Content, MediaBlock, Archive, FormBlock, HotelsBlock, IncludedExcluded, VideoBlock, BestTimeBlock, FaqBlock, LinkHubsBlock, TitleBlock, Gallery, FactChips, StickyTabs, Itinerary, Overview, AccessibilitySection, ReviewsBlock, BookingCard, SimilarItems, DepartureList, OfferBanner, AuthorBoxBlock, GroupDiscountTableBlock, HowItWorksBlock, NewsletterBlock, TermsFAQBlock, CtaBandBlock, FeaturesSafetyBlock, WhatToExpectBlock, SpecsTableBlock, ToursUsingVehicleBlock, SeatMapBlock, PriceTableBlock, PriceMatrixBlock, PolicyBlockComponent, CategoryTilesBlock, FeaturedToursBlock, DestinationTilesBlock, SocialFeedBlock],
               required: true,
               admin: {
                 initCollapsed: true,

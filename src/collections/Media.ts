@@ -27,8 +27,11 @@ export const Media: CollectionConfig = {
     {
       name: 'alt',
       type: 'text',
-      //required: true,
+      localized: true,
+      admin: { description: 'Describe the picture for people who cannot see it. Also used by search engines.' },
     },
+    { name: 'creditText', type: 'text', admin: { description: 'Photographer or owner, shown in image search.' } },
+    { name: 'copyrightNotice', type: 'text' },
     {
       name: 'caption',
       type: 'richText',

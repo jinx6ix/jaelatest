@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tour page</title>
+</head>
+<body>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&amp;family=DM+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1C1917;--brand:#C2410C;--gold:#EA580C;--ground:#FAFAF9;--line:#E7E5E4;--mute:#57534E}
+body{margin:0}
+*{box-sizing:border-box}
+a{color:var(--brand)}a:hover{color:#9A3412}
+.w{max-width:1200px;margin:0 auto;padding:0 32px}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px}
+.h2{font-family:'Bricolage Grotesque',Arial,sans-serif;font-size:30px;margin:0 0 6px;color:var(--ink)}
+.sub{margin:0 0 20px;color:var(--mute)}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 24px;border-radius:8px;background:var(--brand);color:#fff;font-weight:700;font-size:16px;text-decoration:none;border:0;cursor:pointer}
+.btn:hover{color:#fff;background:#9A3412}
+.btn2{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 22px;border-radius:8px;border:1.5px solid currentColor;font-weight:700;font-size:16px;text-decoration:none;background:transparent;cursor:pointer}
+.lbl{display:block;font-size:14px;font-weight:700;margin-bottom:4px}
+.inp{width:100%;min-height:46px;padding:0 10px;border:1px solid #78716C;border-radius:6px;background:#fff;font-size:16px;color:var(--ink)}
+.ph{background:#E7E5E4;color:#44403C;display:flex;align-items:center;justify-content:center;font-size:14px;text-align:center}
+.tab{padding:16px 4px;color:var(--ink);text-decoration:none;font-weight:500;font-size:15px;border-bottom:3px solid transparent}
+.tab:hover{color:var(--brand);border-bottom-color:var(--brand)}
+.sec{padding-top:56px}
+details{border-top:1px solid var(--line)}
+summary{cursor:pointer;padding:18px 20px;font-weight:700;font-size:17px;list-style:none;display:flex;gap:16px;align-items:baseline}
+summary::-webkit-details-marker{display:none}
+.dn{flex:0 0 58px;color:var(--brand);font-family:'Bricolage Grotesque',Arial,sans-serif;text-transform:uppercase;font-size:14px}
+.dd{padding:0 20px 20px 94px;color:#292524}
+.meta{font-size:14px;color:var(--mute);margin-top:8px}
+th,td{padding:14px 16px;text-align:left}
+td{font-weight:700;border-top:1px solid var(--line)}
+.chip{display:inline-flex;gap:8px;align-items:center;padding:6px 12px;border-radius:20px;background:#fff;border:1px solid var(--line);font-size:14px;font-weight:500}
+</style>
+<div style="font-family:'DM Sans',Arial,sans-serif;color:var(--ink);background:var(--ground);line-height:1.55">
+
+<!-- utility bar -->
+<div style="background:var(--ink);color:#E7E5E4;font-size:14px">
+<div class="w" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;padding-top:8px;padding-bottom:8px">
+<span>[+254 000 000 000] · info@jaetravel.co.ke · Nairobi, Kenya</span>
+<span>EN · DE · FR · IT · HI · ZH · AR &nbsp;|&nbsp; <b style="color:var(--gold)">USD</b> · EUR · GBP · KES</span>
+</div></div>
+
+<!-- header -->
+<div style="background:#fff;border-bottom:1px solid var(--line)">
+<div class="w" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;min-height:76px">
+<div style="font-family:'Bricolage Grotesque',Arial,sans-serif;font-weight:700;font-size:22px">[Jae Travel logo]</div>
+<nav style="display:flex;gap:26px;flex-wrap:wrap;font-size:15px;font-weight:500">
+<a href="#" style="color:var(--ink);text-decoration:none">Tours</a><a href="#" style="color:var(--ink);text-decoration:none">Accessible Safaris</a><a href="#" style="color:var(--ink);text-decoration:none">Vehicle Hire</a><a href="#" style="color:var(--ink);text-decoration:none">Destinations</a><a href="#" style="color:var(--ink);text-decoration:none">About</a>
+</nav>
+<a class="btn" href="#book">Get a quote</a>
+</div></div>
+
+<!-- title + gallery -->
+<div class="w" style="padding-top:20px">
+<div style="font-size:14px;color:var(--mute);margin-bottom:14px"><a href="#">Home</a> › <a href="#">Tours</a> › <a href="#">Kenya</a> › [Tour name]</div>
+<div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;margin-bottom:20px">
+<div style="flex:1 1 560px">
+<h1 style="font-family:'Bricolage Grotesque',Arial,sans-serif;font-size:46px;line-height:1.08;margin:0 0 10px">[Tour name]: Masai Mara &amp; Amboseli</h1>
+<p style="margin:0;font-size:18px;color:var(--mute)">[One-line promise.] Private 4x4 safari from Nairobi, 6 days.</p>
+</div>
+<div style="display:flex;gap:12px;flex-wrap:wrap">
+<a class="btn2" href="#download" style="color:var(--brand)">Download itinerary (PDF)</a>
+<a class="btn" href="#book">Request this safari</a>
+</div>
+</div>
+<div style="display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:200px 200px;gap:10px;border-radius:14px;overflow:hidden">
+<div class="ph" style="grid-row:span 2">[Hero photo: lead wildlife shot]</div>
+<div class="ph">[Photo 2]</div><div class="ph">[Photo 3]</div>
+<div class="ph">[Photo 4]</div><div class="ph">[Photo 5 · View all photos]</div>
+</div>
+<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px">
+<span class="chip">6 days · 5 nights</span><span class="chip">2–8 guests</span><span class="chip">Private departure, any day</span><span class="chip">Wheelchair-accessible vehicle available</span><span class="chip">Free cancellation [until 30 days]</span>
+</div>
+<div style="display:flex;gap:22px;flex-wrap:wrap;margin-top:14px;font-size:14px;color:var(--mute)">
+<span><b style="color:var(--ink)">Licensed operator</b> · TRA licence [no.]</span><span><b style="color:var(--ink)">[Magical Kenya]</b> listed member</span><span><b style="color:var(--ink)">★ [4.9]</b> on [TripAdvisor / Google]</span><span><b style="color:var(--ink)">[KATO]</b> member</span>
+</div>
+</div>
+
+<!-- tabs -->
+<div style="background:var(--ground);border-bottom:1px solid var(--line);margin-top:28px;position:sticky;top:0;z-index:5">
+<div class="w" style="display:flex;gap:28px;flex-wrap:wrap">
+<a class="tab" href="#overview">Overview</a><a class="tab" href="#itinerary">Itinerary</a><a class="tab" href="#pricing">Prices</a><a class="tab" href="#hotels">Hotels</a><a class="tab" href="#video">Video</a><a class="tab" href="#reviews">Reviews</a><a class="tab" href="#faq">FAQ</a>
+</div></div>
+
+<!-- body -->
+<div class="w" style="padding-bottom:72px;display:flex;gap:40px;flex-wrap:wrap;align-items:flex-start">
+
+<div style="flex:1 1 640px;min-width:0">
+
+<div id="overview" class="sec">
+<h2 class="h2">Overview</h2>
+<p style="margin:0 0 14px;font-size:17px">[Two or three sentences naming the parks, the pace and who it suits. Use the keyword people search, e.g. "6-day Masai Mara and Amboseli safari from Nairobi".]</p>
+<p style="margin:0 0 16px;font-size:17px">Prefer a different pace? Compare this with our <a href="#">4-day Masai Mara safari</a>, add the <a href="#">Lake Nakuru extension</a>, or see the <a href="#">wheelchair-accessible Masai Mara safari</a> with a hydraulic-lift vehicle.</p>
+<div class="card" style="padding:22px 24px"><h3 style="margin:0 0 10px;font-size:18px">Highlights</h3>
+<ul style="margin:0;padding-left:20px"><li>[Big cat game drives in the Masai Mara]</li><li>[Elephants beneath Kilimanjaro in Amboseli]</li><li>[Cultural visit, optional]</li><li>[Accessible vehicle with hydraulic lift on request]</li></ul></div>
+</div>
+
+<div id="itinerary" class="sec">
+<h2 class="h2">Day-by-day itinerary</h2>
+<p class="sub">Tap a day to expand it. Want different hotels, days or budget? <a href="#"><b>Customise this tour</b></a> and get a new quote.</p>
+<div class="card" style="overflow:hidden">
+<details open="" style="border-top:0"><summary><span class="dn">Day 1</span>Nairobi to Masai Mara</summary><div class="dd">[Pickup time, route, first game drive.]<div class="meta">Stay: [Camp name] · Meals: B L D · Drive: [5–6 hrs]</div></div></details>
+<details><summary><span class="dn">Day 2</span>Full day in the Mara</summary><div class="dd">[Morning and afternoon game drives, picnic lunch.]<div class="meta">Stay: [Camp name] · Meals: B L D</div></div></details>
+<details><summary><span class="dn">Day 3</span>Mara River and culture</summary><div class="dd">[River crossing point (seasonal), optional village visit.]<div class="meta">Stay: [Camp name] · Meals: B L D</div></div></details>
+<details><summary><span class="dn">Day 4</span>Transfer to Amboseli</summary><div class="dd">[Drive or flight, afternoon game drive.]<div class="meta">Stay: [Lodge name] · Meals: B L D</div></div></details>
+<details><summary><span class="dn">Day 5</span>Amboseli elephants</summary><div class="dd">[Sunrise drive, swamps, free afternoon.]<div class="meta">Stay: [Lodge name] · Meals: B L D</div></div></details>
+<details><summary><span class="dn">Day 6</span>Return to Nairobi</summary><div class="dd">[Morning drive, drop-off at hotel or airport.]<div class="meta">Meals: B L</div></div></details>
+</div>
+</div>
+
+<!-- download band -->
+<div id="download" class="card" style="margin-top:28px;padding:26px 28px;border-left:6px solid var(--gold);display:flex;gap:24px;flex-wrap:wrap;align-items:center">
+<div style="flex:1 1 300px">
+<h3 style="margin:0 0 6px;font-family:'Bricolage Grotesque',Arial,sans-serif;font-size:22px">Take this itinerary with you</h3>
+<p style="margin:0;color:var(--mute)">A branded PDF with the full day-by-day plan, inclusions and prices by season. [PDF · 2 pages · 1.2 MB]</p>
+</div>
+<div style="display:flex;gap:12px;flex-wrap:wrap">
+<a class="btn" href="/itineraries/[tour-slug].pdf" download="">Download PDF</a>
+<a class="btn2" href="#book" style="color:var(--brand)">Email it to me</a>
+</div>
+</div>
+
+<div id="pricing" class="sec">
+<h2 class="h2">Prices by season and group size</h2>
+<p class="sub">Per person sharing. The more guests share the vehicle, the lower the per-person rate.</p>
+<div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px">
+<span class="meta" style="margin:0">Show prices in:</span>
+<span class="chip" style="background:var(--ink);color:#fff;border-color:var(--ink)">USD</span><span class="chip">EUR</span><span class="chip">GBP</span><span class="chip">KES</span>
+<span class="meta" style="margin:0 0 0 8px">Per person · <u>Per vehicle</u></span>
+</div>
+<div class="card" style="overflow-x:auto">
+<table style="width:100%;min-width:560px;border-collapse:collapse">
+<thead><tr style="background:var(--ink);color:#fff"><th>Season</th><th>2 guests</th><th>4 guests</th><th>6 guests</th><th>8 guests</th></tr></thead>
+<tbody>
+<tr><td><div>Low season</div><div class="meta" style="margin:0;font-weight:400">[Apr – May]</div></td><td>$[price]</td><td>$[price]</td><td>$[price]</td><td>$[price]</td></tr>
+<tr style="background:#FFF7ED"><td><div>Shoulder</div><div class="meta" style="margin:0;font-weight:400">[Jan – Mar, Nov]</div></td><td>$[price]</td><td>$[price]</td><td>$[price]</td><td>$[price]</td></tr>
+<tr><td><div>High season</div><div class="meta" style="margin:0;font-weight:400">[Jun – Oct]</div></td><td>$[price]</td><td>$[price]</td><td>$[price]</td><td>$[price]</td></tr>
+<tr style="background:#FFF7ED"><td><div>Peak / festive</div><div class="meta" style="margin:0;font-weight:400">[15 Dec – 5 Jan]</div></td><td>$[price]</td><td>$[price]</td><td>$[price]</td><td>$[price]</td></tr>
+</tbody></table></div>
+<p class="meta" style="margin-top:10px">Rates valid until [date]. Converted at [rate source], updated [daily]. Single supplement $[amount] · Children [2–11] [discount] · Included and excluded items listed in the PDF.</p>
+<div style="display:flex;gap:20px;flex-wrap:wrap;margin-top:20px">
+<div class="card" style="flex:1 1 260px;padding:20px 22px"><h3 style="margin:0 0 8px;font-size:17px">Included</h3><ul style="margin:0;padding-left:20px"><li>[Accommodation, full board]</li><li>[Park fees]</li><li>[Vehicle and driver-guide]</li></ul></div>
+<div class="card" style="flex:1 1 260px;padding:20px 22px"><h3 style="margin:0 0 8px;font-size:17px">Not included</h3><ul style="margin:0;padding-left:20px"><li>[International flights]</li><li>[Visas, insurance]</li><li>[Tips, drinks]</li></ul></div>
+</div>
+</div>
+
+<div class="sec">
+<h2 class="h2">How booking works</h2>
+<p class="sub">No payment to request a quote.</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px">
+<div class="card" style="padding:20px 22px"><div class="dn" style="margin-bottom:4px">Step 1</div><div style="font-weight:700;margin-bottom:4px">Send a request</div><div class="meta" style="margin:0">Choose guests, season and dates. Takes 2 minutes.</div></div>
+<div class="card" style="padding:20px 22px"><div class="dn" style="margin-bottom:4px">Step 2</div><div style="font-weight:700;margin-bottom:4px">Get your quote</div><div class="meta" style="margin:0">A planner replies within [24 hours] with a confirmed price.</div></div>
+<div class="card" style="padding:20px 22px"><div class="dn" style="margin-bottom:4px">Step 3</div><div style="font-weight:700;margin-bottom:4px">Pay a deposit</div><div class="meta" style="margin:0">[30%] deposit by card, bank transfer or M-Pesa. Balance [30 days] before.</div></div>
+</div>
+<p class="meta" style="margin-top:12px">Cancellation: [full refund until 30 days before, 50% until 14 days]. <a href="#">Read the full policy</a></p>
+</div>
+
+<div id="hotels" class="sec">
+<h2 class="h2">Where you'll stay</h2>
+<p class="sub">Pulled from your hotel records, so the tour page and quotation always match.</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px">
+<div class="card" style="overflow:hidden"><div class="ph" style="height:140px">[Hotel photo]</div><div style="padding:16px 18px"><div style="font-weight:700">[Camp name], Masai Mara</div><div class="meta" style="margin:2px 0 0">Nights 1–3 · [Tier]</div></div></div>
+<div class="card" style="overflow:hidden"><div class="ph" style="height:140px">[Hotel photo]</div><div style="padding:16px 18px"><div style="font-weight:700">[Lodge name], Amboseli</div><div class="meta" style="margin:2px 0 0">Nights 4–5 · [Tier]</div></div></div>
+</div>
+</div>
+
+<div id="video" class="sec">
+<h2 class="h2">Watch the safari</h2>
+<div class="ph" style="aspect-ratio:16/9;border-radius:12px;font-size:16px">[YouTube video: click-to-play thumbnail]</div>
+</div>
+
+<div id="reviews" class="sec">
+<h2 class="h2">Traveller reviews</h2>
+<p class="sub">[4.9 average from X verified reviews]</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
+<div class="card" style="padding:20px 22px"><div style="color:var(--brand);font-weight:700">★★★★★</div><p style="margin:8px 0">[Verified review text.]</p><div class="meta" style="margin:0">[Name, country, month]</div></div>
+<div class="card" style="padding:20px 22px"><div style="color:var(--brand);font-weight:700">★★★★★</div><p style="margin:8px 0">[Verified review text.]</p><div class="meta" style="margin:0">[Name, country, month]</div></div>
+</div>
+</div>
+
+<div id="besttime" class="sec">
+<h2 class="h2">Best time for this safari</h2>
+<p class="sub">[Short answer first: e.g. "July to October for the Great Migration; January to March for calving and fewer crowds."]</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px">
+<div class="card" style="padding:18px 20px"><h3 style="margin:0 0 6px;font-size:17px">Jul – Oct</h3><p style="margin:0 0 8px">[What you see.]</p><a href="#">Great Migration safaris</a></div>
+<div class="card" style="padding:18px 20px"><h3 style="margin:0 0 6px;font-size:17px">Jan – Mar</h3><p style="margin:0 0 8px">[What you see.]</p><a href="#">Safaris in the green season</a></div>
+<div class="card" style="padding:18px 20px"><h3 style="margin:0 0 6px;font-size:17px">Accessible travel</h3><p style="margin:0 0 8px">[Which months suit limited mobility.]</p><a href="#">Accessible migration safari guide</a></div>
+</div>
+</div>
+
+<div id="faq" class="sec">
+<h2 class="h2">Questions</h2>
+<div class="card" style="overflow:hidden;margin-top:16px">
+<details style="border-top:0"><summary>Is this tour wheelchair accessible?</summary><div style="padding:0 20px 18px">[Answer about the hydraulic-lift vehicle and accessible rooms.]</div></details>
+<details><summary>Can I change the hotels or dates?</summary><div style="padding:0 20px 18px">[Answer.]</div></details>
+<details><summary>How do I pay?</summary><div style="padding:0 20px 18px">[Deposit, M-Pesa, card, bank transfer.]</div></details>
+</div>
+</div>
+
+</div>
+
+<!-- right rail -->
+<div id="book" style="flex:0 1 390px;min-width:300px;position:sticky;top:68px;margin-top:56px">
+<div class="card" style="padding:26px;box-shadow:0 10px 30px rgba(28,25,23,.10)">
+<div style="font-size:14px;color:var(--mute)">From</div>
+<div style="font-family:'Bricolage Grotesque',Arial,sans-serif;font-size:36px;font-weight:700;line-height:1.1">$[price] <span style="font-size:15px;font-weight:500;color:var(--mute)">per person</span></div>
+<div class="meta" style="margin:2px 0 18px">8 guests, low season</div>
+<div style="display:flex;flex-direction:column;gap:13px">
+<div style="display:flex;gap:12px">
+<div style="flex:1"><label class="lbl" for="g">Guests</label><select class="inp" id="g"><option>2</option><option>4</option><option>6</option><option>8</option><option>More than 8</option></select></div>
+<div style="flex:1"><label class="lbl" for="s">Season</label><select class="inp" id="s"><option>Low</option><option>Shoulder</option><option>High</option><option>Peak</option></select></div>
+</div>
+<div><label class="lbl" for="d">Start date</label><input class="inp" id="d" type="date"></div>
+<div><label class="lbl" for="n">Full name</label><input class="inp" id="n" type="text"></div>
+<div><label class="lbl" for="e">Email</label><input class="inp" id="e" type="email"></div>
+<div><label class="lbl" for="p">Phone / WhatsApp</label><input class="inp" id="p" type="tel"></div>
+<div><label class="lbl" for="t">Special requests</label><textarea class="inp" id="t" rows="3" style="padding:10px;resize:vertical"></textarea></div>
+<label style="display:flex;gap:10px;align-items:flex-start;font-size:14px"><input type="checkbox" style="margin-top:3px;width:18px;height:18px"> Also email me the itinerary PDF</label>
+<div style="background:#FFF7ED;border-radius:8px;padding:12px 16px;display:flex;justify-content:space-between;align-items:baseline"><span class="meta" style="margin:0">Estimated total</span><span style="font-family:'Bricolage Grotesque',Arial,sans-serif;font-size:24px;font-weight:700">$[total]</span></div>
+<button class="btn" type="button" style="min-height:52px;font-size:17px">Send booking request</button>
+<div class="meta" style="text-align:center;margin:0">No payment now. Reply within [24 hours].</div>
+<a class="btn2" href="#" style="color:var(--brand);min-height:44px">Customise this tour</a>
+<div class="meta" style="text-align:center;margin:0">Licensed Kenyan operator · TRA [no.]</div>
+</div></div>
+<div class="card" style="margin-top:16px;padding:18px 22px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+<div><div style="font-weight:700">Itinerary PDF</div><div class="meta" style="margin:0">[2 pages · 1.2 MB]</div></div>
+<a class="btn2" href="/itineraries/[tour-slug].pdf" download="" style="color:var(--brand);min-height:44px">Download</a>
+</div>
+</div>
+
+</div>
+
+<!-- similar safaris + link hubs -->
+<div style="background:#fff;border-top:1px solid var(--line);padding:56px 0">
+<div class="w">
+<h2 class="h2">Similar safaris</h2>
+<p class="sub">Each card links to its own tour page, with a short description that says how it differs from this one.</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px">
+<div class="card" style="overflow:hidden"><div class="ph" style="height:150px">[Photo]</div><div style="padding:16px 18px"><a href="#" style="font-weight:700;font-size:17px;text-decoration:none">[4-day Masai Mara Safari]</a><p style="margin:6px 0 8px;font-size:15px;color:#292524">[Shorter version of this trip, focused on big cats. Good for a long weekend.]</p><div class="meta" style="margin:0">4 days · from $[price]</div></div></div>
+<div class="card" style="overflow:hidden"><div class="ph" style="height:150px">[Photo]</div><div style="padding:16px 18px"><a href="#" style="font-weight:700;font-size:17px;text-decoration:none">[7-day Mara, Nakuru &amp; Amboseli]</a><p style="margin:6px 0 8px;font-size:15px;color:#292524">[Adds Lake Nakuru for flamingos and rhino. One extra night, more variety.]</p><div class="meta" style="margin:0">7 days · from $[price]</div></div></div>
+<div class="card" style="overflow:hidden"><div class="ph" style="height:150px">[Photo]</div><div style="padding:16px 18px"><a href="#" style="font-weight:700;font-size:17px;text-decoration:none">[Wheelchair-Accessible Masai Mara Safari]</a><p style="margin:6px 0 8px;font-size:15px;color:#292524">[Same parks with an adapted vehicle and accessible rooms.]</p><div class="meta" style="margin:0">[X] days · from $[price]</div></div></div>
+</div>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:28px;margin-top:44px">
+<div><h3 style="margin:0 0 10px;font-size:17px">By destination</h3><div style="display:flex;flex-direction:column;gap:6px"><a href="#">Masai Mara safaris</a><a href="#">Amboseli safaris</a><a href="#">Kenya circuit safaris</a><a href="#">Tanzania safaris</a><a href="#">Uganda gorilla trekking</a></div></div>
+<div><h3 style="margin:0 0 10px;font-size:17px">By interest</h3><div style="display:flex;flex-direction:column;gap:6px"><a href="#">Wheelchair-accessible safaris</a><a href="#">Great Migration safaris</a><a href="#">Cultural tours</a><a href="#">Birding safaris</a></div></div>
+<div><h3 style="margin:0 0 10px;font-size:17px">Plan your trip</h3><div style="display:flex;flex-direction:column;gap:6px"><a href="#">Safari vehicle hire in Kenya</a><a href="#">Kenya safari cost guide</a><a href="#">Best time to visit Kenya</a><a href="#">Build your own itinerary</a></div></div>
+<div><h3 style="margin:0 0 10px;font-size:17px">From the blog</h3><div style="display:flex;flex-direction:column;gap:6px"><a href="#">[Accessible Great Migration guide]</a><a href="#">[What to pack for a safari]</a></div></div>
+</div>
+</div></div>
+
+<a href="#" style="position:fixed;right:20px;bottom:20px;z-index:20;background:#1B7A45;color:#fff;text-decoration:none;font-weight:700;padding:0 22px;min-height:52px;border-radius:26px;display:flex;align-items:center;gap:8px;box-shadow:0 6px 20px rgba(0,0,0,.25)">Chat on WhatsApp</a>
+
+<!-- footer -->
+<div style="background:var(--ink);color:#E7E5E4;padding:40px 0 28px;font-size:14px">
+<div class="w" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:24px">
+<div style="max-width:340px"><div style="font-family:'Bricolage Grotesque',Arial,sans-serif;font-size:20px;color:#fff;margin-bottom:8px">[Jae Travel logo]</div>Kenya-based tour operator for safari, adventure and transport across East Africa.</div>
+<div style="display:flex;gap:48px;flex-wrap:wrap"><div style="display:flex;flex-direction:column;gap:6px"><b style="color:#fff">Explore</b><span>Tours</span><span>Accessible Safaris</span><span>Vehicle Hire</span></div><div style="display:flex;flex-direction:column;gap:6px"><b style="color:#fff">Company</b><span>About</span><span>Contact</span><span>Terms</span></div></div>
+</div></div>
+
+</div>
+</body>
+</html>

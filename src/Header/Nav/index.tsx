@@ -4,22 +4,28 @@ import React from 'react'
 
 import type { Header as HeaderType } from '@/payload-types'
 
-import { CMSLink } from '@/components/Link'
+import { LanguageSwitcher } from '@/components/LanguageSwitcher'
 import Link from 'next/link'
 import { SearchIcon } from 'lucide-react'
 
 export const HeaderNav: React.FC<{ data: HeaderType }> = ({ data }) => {
-  const navItems = data?.navItems || []
+  const items = data?.items || []
 
   return (
     <nav className="flex gap-3 items-center">
-      {navItems.map(({ link }, i) => {
-        return <CMSLink key={i} {...link} appearance="link" />
+      {items.map((item, i) => {
+        const href = item.routeKey === 'custom' ? item.url || '/' : `/${item.routeKey}`
+        return (
+          <Link key={i} href={href} className="text-foreground hover:text-primary">
+            {item.label}
+          </Link>
+        )
       })}
       <Link href="/search">
         <span className="sr-only">Search</span>
         <SearchIcon className="w-5 text-primary" />
       </Link>
+      <LanguageSwitcher />
     </nav>
   )
 }

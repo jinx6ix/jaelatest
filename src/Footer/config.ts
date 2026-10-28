@@ -1,32 +1,24 @@
 import type { GlobalConfig } from 'payload'
-
-import { link } from '@/fields/link'
+import { navLinkFields } from '@/fields/navLink'
 import { revalidateFooter } from './hooks/revalidateFooter'
 
 export const Footer: GlobalConfig = {
   slug: 'footer',
-  access: {
-    read: () => true,
-  },
+  access: { read: () => true },
+  admin: { group: 'Site' },
   fields: [
     {
-      name: 'navItems',
+      name: 'columns',
       type: 'array',
+      maxRows: 4,
+      admin: { initCollapsed: true },
       fields: [
-        link({
-          appearances: false,
-        }),
+        { name: 'title', type: 'text', required: true, localized: true },
+        { name: 'links', type: 'array', fields: navLinkFields() },
       ],
-      maxRows: 6,
-      admin: {
-        initCollapsed: true,
-        components: {
-          RowLabel: '@/Footer/RowLabel#RowLabel',
-        },
-      },
     },
+    { name: 'legalLinks', type: 'array', fields: navLinkFields() },
+    { name: 'copyright', type: 'text', localized: true, admin: { description: 'Use {year} for the current year.' } },
   ],
-  hooks: {
-    afterChange: [revalidateFooter],
-  },
+  hooks: { afterChange: [revalidateFooter] },
 }

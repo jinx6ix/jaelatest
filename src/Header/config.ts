@@ -1,32 +1,28 @@
 import type { GlobalConfig } from 'payload'
-
-import { link } from '@/fields/link'
+import { navLinkFields } from '@/fields/navLink'
 import { revalidateHeader } from './hooks/revalidateHeader'
 
 export const Header: GlobalConfig = {
   slug: 'header',
-  access: {
-    read: () => true,
-  },
+  access: { read: () => true },
+  admin: { group: 'Site' },
   fields: [
     {
-      name: 'navItems',
+      name: 'items',
       type: 'array',
+      maxRows: 8,
+      admin: { initCollapsed: true, description: 'Main menu. Add sub items under a parent to make a dropdown.' },
       fields: [
-        link({
-          appearances: false,
-        }),
+        ...navLinkFields(),
+        { name: 'children', type: 'array', maxRows: 8, fields: navLinkFields({ description: true }) },
       ],
-      maxRows: 6,
-      admin: {
-        initCollapsed: true,
-        components: {
-          RowLabel: '@/Header/RowLabel#RowLabel',
-        },
-      },
+    },
+    {
+      name: 'cta',
+      type: 'group',
+      label: 'Button on the right',
+      fields: navLinkFields(),
     },
   ],
-  hooks: {
-    afterChange: [revalidateHeader],
-  },
+  hooks: { afterChange: [revalidateHeader] },
 }

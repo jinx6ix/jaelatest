@@ -3,13 +3,12 @@ import Link from 'next/link'
 import React from 'react'
 
 import { ThemeSelector } from '@/providers/Theme/ThemeSelector'
-import { CMSLink } from '@/components/Link'
 import { Logo } from '@/components/Logo/Logo'
 
 export async function Footer() {
   const footerData = await getCachedGlobal('footer', 1)()
 
-  const navItems = footerData?.navItems || []
+  const legalLinks = footerData?.legalLinks || []
 
   return (
     <footer className="mt-auto border-t border-border bg-black dark:bg-card text-white">
@@ -21,8 +20,13 @@ export async function Footer() {
         <div className="flex flex-col-reverse items-start md:flex-row gap-4 md:items-center">
           <ThemeSelector />
           <nav className="flex flex-col md:flex-row gap-4">
-            {navItems.map(({ link }, i) => {
-              return <CMSLink className="text-white" key={i} {...link} />
+            {legalLinks.map((item, i) => {
+              const href = item.routeKey === 'custom' ? item.url || '/' : `/${item.routeKey}`
+              return (
+                <Link className="text-white" key={i} href={href}>
+                  {item.label}
+                </Link>
+              )
             })}
           </nav>
         </div>
