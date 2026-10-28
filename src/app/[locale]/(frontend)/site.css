@@ -425,3 +425,27 @@ html[dir=rtl] .jt-hero__controls{direction:rtl}
 .jt-main{min-width:0}
 .jt-eligible__price{margin:.6rem 0 0;font-size:.95rem}
 .jt-eligible__price strong{font:800 1.2rem var(--font-display),sans-serif}
+
+@media (max-width:480px){
+  .jt-wrap{padding-inline:12px}
+  .jt-body{font-size:0.98rem}
+  .jt-header__bar{gap:6px}
+  .jt-logo{font-size:1.05rem;gap:6px}
+  .jt-logo__img{width:34px;height:34px}
+  .jt-header__tools{gap:4px}
+  .jt-iconbtn,.jt-burger{width:38px;height:38px}
+  .jt-wa{bottom:calc(74px + env(safe-area-inset-bottom,0px));padding:.45rem .65rem;font-size:.8rem;gap:.35rem}
+  .jt-mbar{padding:8px 12px calc(8px + env(safe-area-inset-bottom,0px))}
+  .jt-mbar strong{font-size:1.15rem}
+  .jt-mbar .jt-btn{padding:.5rem .85rem;font-size:.85rem}
+  .jt-table{min-width:340px;font-size:.82rem}
+  .jt-table th,.jt-table td{padding:8px 8px}
+  .jt-dep{padding:10px 10px;gap:8px;grid-template-columns:1fr;font-size:.9rem}
+  .jt-dep__price,.jt-dep .jt-btn,.jt-dep .jt-link-sm{grid-column:1/-1}
+  .jt-btn{padding:.6rem 1rem;font-size:.9rem}
+  .jt-finder,.jt-filter{padding:12px;gap:10px}
+  .jt-card__body,.jt-offer__body{padding:14px}
+  .jt-side{padding:16px}
+  .jt-side__amount{font-size:1.9rem}
+}
+
