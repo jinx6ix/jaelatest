@@ -180,7 +180,7 @@ export async function seedSite(payload: Payload, opts: { fresh?: boolean } = {})
     accessible: ['facts', 'highlights', 'accessibility', 'tabs', 'bestTime', 'faq', 'similar'],
     migration: ['facts', 'highlights', 'offerBanner', 'tabs', 'bestTime', 'faq', 'similar'],
   }
-  const tabsStd = ['itinerary', 'inclusions', 'exclusions', 'booking', 'gallery', 'videos']
+  const tabsStd = ['itinerary', 'booking', 'inclusions', 'exclusions', 'gallery', 'videos']
   const templates: Record<string, any> = {}
   for (const v of ['standard', 'budget', 'accessible', 'migration']) {
     templates[v] = await upsert(payload, 'templates', { variant: { equals: v } }, {
