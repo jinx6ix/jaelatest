@@ -48,7 +48,7 @@ export const baseOrg = (ctx: SiteContext) =>
   })
 
 const DEFAULT_SECTIONS = ['facts', 'highlights', 'tabs', 'whyCheaper', 'accessibility', 'bestTime', 'faq', 'similar']
-const DEFAULT_TABS = ['itinerary', 'inclusions', 'exclusions', 'booking', 'gallery', 'videos']
+const DEFAULT_TABS = ['itinerary', 'booking', 'inclusions', 'exclusions', 'gallery', 'videos']
 
 export async function getTemplateFor(variant: string) {
   const payload = await getPayloadClient()
