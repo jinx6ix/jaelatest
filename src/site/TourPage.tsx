@@ -32,6 +32,7 @@ import {
   webPageNode,
 } from '@/lib/schema'
 import { Breadcrumbs } from './Breadcrumbs'
+import { TourHeroStack } from './TourHeroStack'
 import { Img } from './Img'
 import { JsonLd } from './JsonLd'
 import { Tabs, type TabDef } from './Tabs'
@@ -133,6 +134,7 @@ export async function TourPage({ ctx, tour }: { ctx: SiteContext; tour: Tour }) 
   ).filter((x: any) => x.enabled !== false)
 
   // ---- tabs ----
+  const heroImages = [tour.heroImage, ...(tour.gallery || []).map((g: any) => g.image)].filter(Boolean)
   const days: any[] = tour.itinerary || []
   const included = (tour.included || []).map((x: any) => x.text).filter(Boolean)
   const excluded = (tour.excluded || []).map((x: any) => x.text).filter(Boolean)
@@ -579,14 +581,16 @@ export async function TourPage({ ctx, tour }: { ctx: SiteContext; tour: Tour }) 
             </p>
           </div>
           <div className="jt-head__img">
-            {heroImg && (
+            {heroImages.length > 0 ? (
+              <TourHeroStack images={heroImages} alt={tour.title} />
+            ) : heroImg ? (
               <Img
                 media={tour.heroImage}
                 alt={tour.title}
                 sizes="(min-width:1000px) 45vw, 100vw"
                 priority
               />
-            )}
+            ) : null}
           </div>
         </header>
         <TrustStrip items={trust} />
