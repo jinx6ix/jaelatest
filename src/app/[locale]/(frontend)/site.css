@@ -427,25 +427,30 @@ html[dir=rtl] .jt-hero__controls{direction:rtl}
 .jt-eligible__price strong{font:800 1.2rem var(--font-display),sans-serif}
 
 @media (max-width:480px){
-  .jt-wrap{padding-inline:12px}
-  .jt-body{font-size:0.98rem}
-  .jt-header__bar{gap:6px}
-  .jt-logo{font-size:1.05rem;gap:6px}
-  .jt-logo__img{width:34px;height:34px}
-  .jt-header__tools{gap:4px}
-  .jt-iconbtn,.jt-burger{width:38px;height:38px}
-  .jt-wa{bottom:calc(74px + env(safe-area-inset-bottom,0px));padding:.45rem .65rem;font-size:.8rem;gap:.35rem}
-  .jt-mbar{padding:8px 12px calc(8px + env(safe-area-inset-bottom,0px))}
-  .jt-mbar strong{font-size:1.15rem}
-  .jt-mbar .jt-btn{padding:.5rem .85rem;font-size:.85rem}
-  .jt-table{min-width:340px;font-size:.82rem}
-  .jt-table th,.jt-table td{padding:8px 8px}
-  .jt-dep{padding:10px 10px;gap:8px;grid-template-columns:1fr;font-size:.9rem}
+  html,body{overflow-x:hidden}
+  .jt-wrap{padding-inline:8px;max-width:100%}
+  .jt-body{font-size:0.95rem}
+  .jt-header__bar{gap:4px;min-height:64px}
+  .jt-logo{font-size:0.98rem;gap:4px;max-width:55%}
+  .jt-logo__img{width:32px;height:32px;flex:none}
+  .jt-logo__text{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .jt-header__tools{gap:2px}
+  .jt-iconbtn,.jt-burger{width:34px;height:34px;padding:0}
+  .jt-wa{bottom:calc(70px + env(safe-area-inset-bottom,0px));inset-inline-end:10px;padding:.4rem .6rem;font-size:.78rem;gap:.3rem}
+  .jt-mbar{padding:6px 10px calc(6px + env(safe-area-inset-bottom,0px))}
+  .jt-mbar strong{font-size:1.05rem}
+  .jt-mbar .jt-btn{padding:.45rem .75rem;font-size:.82rem}
+  .jt-table{min-width:260px;font-size:.78rem}
+  .jt-table th,.jt-table td{padding:6px 6px}
+  .jt-tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .jt-dep{padding:8px 10px;gap:6px;grid-template-columns:1fr;font-size:.85rem}
   .jt-dep__price,.jt-dep .jt-btn,.jt-dep .jt-link-sm{grid-column:1/-1}
-  .jt-btn{padding:.6rem 1rem;font-size:.9rem}
-  .jt-finder,.jt-filter{padding:12px;gap:10px}
-  .jt-card__body,.jt-offer__body{padding:14px}
-  .jt-side{padding:16px}
-  .jt-side__amount{font-size:1.9rem}
+  .jt-btn{padding:.5rem .8rem;font-size:.85rem}
+  .jt-finder,.jt-filter{padding:10px;gap:8px}
+  .jt-card__body,.jt-offer__body{padding:12px}
+  .jt-side{padding:14px}
+  .jt-side__amount{font-size:1.7rem}
+  .jt-finderwrap{margin-top:-40px}
 }
+
 
