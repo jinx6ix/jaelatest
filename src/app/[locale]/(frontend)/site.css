@@ -415,6 +415,15 @@ html[dir=rtl] .jt-hero__controls{direction:rtl}
 .jt-wa:hover{transform:translateY(-3px)}
 @media (max-width:1000px){.jt-wa{bottom:calc(78px + env(safe-area-inset-bottom,0px));padding:.7rem .9rem;z-index:39}}
 
+/* hero image card stack flip animation */
+.jt-herostack{position:relative;width:100%;aspect-ratio:16/11;cursor:pointer;perspective:1000px}
+.jt-herostack__card{position:absolute;inset:0;border-radius:var(--jt-r-panel);border:3px solid var(--jt-ink);box-shadow:var(--jt-pop) var(--jt-pop) 0 var(--jt-brand);overflow:hidden;background:var(--jt-surface);transition:transform .5s cubic-bezier(.77,0,.18,1),opacity .5s ease,box-shadow .5s;transform-origin:left center}
+.jt-herostack__card img{width:100%;height:100%;object-fit:cover;display:block}
+.jt-herostack__card.is-front{transform:translate(0,0) scale(1) rotate(0deg);z-index:3}
+.jt-herostack__card.is-second{transform:translate(12px,12px) scale(.95) rotate(2deg);z-index:2;opacity:.9}
+.jt-herostack__card.is-back{transform:translate(24px,24px) scale(.9) rotate(4deg);z-index:1;opacity:.8}
+.jt-herostack__card.is-flipping{transform:translateX(-100%) rotateY(-90deg) scale(.8);opacity:0}
+
 /* motion preferences */
 @media (prefers-reduced-motion:reduce){
   .jt-hero__track{transition:none}
