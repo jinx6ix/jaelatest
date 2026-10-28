@@ -93,12 +93,12 @@ export function BookingPanel({
           <h3>{t('booking.nextDepartures')}</h3>
           <ul className="jt-deplist">
             {departures.map((d) => (
-              <li key={d.id}>
-                <span>
+              <li key={d.id} className="jt-dep">
+                <span className="jt-dep__date">
                   <IconCalendar size={16} /> <strong>{fmt(d.start)}</strong> – {fmt(d.end)}
                 </span>
                 <span className={`jt-status jt-status--${d.status}`}>{t(`status.${d.status}` as any)}</span>
-                <Money cents={d.priceCents} />
+                <span className="jt-dep__price"><Money cents={d.priceCents} /></span>
                 <button type="button" className="jt-btn jt-btn--line jt-btn--sm" onClick={() => pick(d.start)}>
                   {t('booking.pickDate')}
                 </button>
