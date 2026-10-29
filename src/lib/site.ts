@@ -3,13 +3,28 @@ import { getPayload } from 'payload'
 import { cache } from 'react'
 import { getServerSideURL } from '@/utilities/getURL'
 import { cachedGlobal } from './globals'
-import { getRoutes, type RoutesMap, type TourVariant } from './routes'
+import { ROUTE_DEFAULTS, type RouteKey, type RoutesMap, type TourVariant } from './routes'
 import { getDictionary, type Dict } from '@/i18n'
 import { mediaUrl } from './media'
 import type { Company, Offer, Post, SiteSetting, Tour, Vehicle, JointDeparture, GalleryItem, Destination, Season, Theme } from '@/payload-types'
 import type { SeasonLite } from './pricing'
 
 export const getPayloadClient = () => getPayload({ config: configPromise })
+
+export async function getRoutes(locale: string): Promise<RoutesMap> {
+  const map = JSON.parse(JSON.stringify(ROUTE_DEFAULTS)) as RoutesMap
+  try {
+    const g = await cachedGlobal('routes', locale, 0)
+    for (const r of g?.routes || []) {
+      if (r?.key && map[r.key as RouteKey]) {
+        map[r.key as RouteKey] = { prefix: r.prefix || map[r.key as RouteKey].prefix, label: r.breadcrumbLabel || map[r.key as RouteKey].label }
+      }
+    }
+  } catch {
+    /* defaults */
+  }
+  return map
+}
 
 export type SiteContext = {
   locale: string

@@ -1,4 +1,3 @@
-import { cachedGlobal } from './globals'
 
 export const LOCALES = ['en', 'de', 'fr', 'it', 'hi', 'zh', 'ar'] as const
 export type Locale = (typeof LOCALES)[number]
@@ -48,21 +47,6 @@ export const ROUTE_DEFAULTS: Record<RouteKey, { prefix: string; label: string }>
 }
 
 export type RoutesMap = Record<RouteKey, { prefix: string; label: string }>
-
-export async function getRoutes(locale: string): Promise<RoutesMap> {
-  const map = JSON.parse(JSON.stringify(ROUTE_DEFAULTS)) as RoutesMap
-  try {
-    const g = await cachedGlobal('routes', locale, 0)
-    for (const r of g?.routes || []) {
-      if (r?.key && map[r.key as RouteKey]) {
-        map[r.key as RouteKey] = { prefix: r.prefix || map[r.key as RouteKey].prefix, label: r.breadcrumbLabel || map[r.key as RouteKey].label }
-      }
-    }
-  } catch {
-    /* defaults */
-  }
-  return map
-}
 
 export const routeKeyForPrefix = (map: RoutesMap, prefix: string): RouteKey | null =>
   (Object.keys(map) as RouteKey[]).find((k) => map[k].prefix === prefix) ?? null
