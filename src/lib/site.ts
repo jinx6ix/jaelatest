@@ -75,7 +75,7 @@ export const findTours = async (q: TourQuery): Promise<Tour[]> => {
   const res = await payload.find({
     collection: 'tours',
     where: { and },
-    limit: q.limit ?? 60,
+    limit: q.limit ?? 200,
     pagination: false,
     depth: 2,
     locale: q.locale as any,
