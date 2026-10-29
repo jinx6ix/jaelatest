@@ -3,20 +3,21 @@
 import React, { useState } from 'react'
 import type { Tour } from '@/payload-types'
 import type { RoutesMap } from '@/lib/routes'
-import type { TFn } from '@/i18n'
+import { makeT } from '@/i18n/index-client'
 import { TourCard } from './Cards'
 
 export function TourListingClient({
   tours,
   routes,
   locale,
-  t,
+  dict,
 }: {
   tours: Tour[]
   routes: RoutesMap
   locale: string
-  t: TFn
+  dict: Record<string, string>
 }) {
+  const t = makeT(dict)
   const [page, setPage] = useState(1)
   const pageSize = 9
   const totalPages = Math.ceil(tours.length / pageSize) || 1

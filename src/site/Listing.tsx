@@ -106,7 +106,7 @@ export async function ListingPage({ ctx, routeKey, sp }: { ctx: SiteContext; rou
             {t('finder.submit')}
           </button>
         </form>
-        <TourListingClient tours={tours} routes={routes} locale={locale} t={t} />
+        <TourListingClient tours={tours} routes={routes} locale={locale} dict={ctx.dict} />
       </>
     )
   } else if (src.collection === 'joint-departures') {
