@@ -70,7 +70,7 @@ export const routeKeyForPrefix = (map: RoutesMap, prefix: string): RouteKey | nu
 export const tourRouteKey = (variant?: string | null): RouteKey =>
   variant === 'accessible' ? 'disabilityTours' : variant === 'budget' ? 'budgetTours' : variant === 'migration' ? 'migrationTours' : 'tours'
 
-export const withLocale = (locale: string, path: string) => `/${locale}${path === '/' ? '' : path}`
+export const withLocale = (locale: string, path: string) => locale === 'en' ? (path === '/' ? '/' : path) : `/${locale}${path === '/' ? '' : path}`
 
 export const pathFor = (map: RoutesMap, key: RouteKey, slug?: string) => `/${map[key].prefix}${slug ? `/${slug}` : ''}`
 

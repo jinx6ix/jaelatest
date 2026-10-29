@@ -4,7 +4,7 @@ import type { Payload } from 'payload'
 import { addDays, ctx, iso, lexical, slugify, upsert } from './helpers'
 import { BEST_TIME, DESTINATIONS, FAQ, HOTELS, POSTS, TOURS, VEHICLES } from './content'
 
-const MEDIA_DIR = path.resolve(process.cwd(), 'content/media')
+const MEDIA_DIR = path.resolve(process.cwd(), 'public')
 const BRAND_DIR = path.resolve(process.cwd(), 'content/brand')
 
 const ALT: Record<string, string> = {
@@ -51,12 +51,13 @@ export async function seedSite(payload: Payload, opts: { fresh?: boolean } = {})
     media[name] = doc.id
     bump('media')
   }
-  for (const f of fs.readdirSync(MEDIA_DIR).filter((x) => x.endsWith('.jpg'))) {
-    const name = f.replace('.jpg', '')
-    await uploadMedia(name, path.join(MEDIA_DIR, f), ALT[name] || `${name} (sample artwork)`)
+  for (const f of fs.readdirSync(MEDIA_DIR).filter((x) => /\.(jpg|jpeg|png|webp|avif)$/i.test(x))) {
+    const ext = path.extname(f)
+    const name = f.replace(new RegExp(`${ext}$`, 'i'), '')
+    await uploadMedia(name, path.join(MEDIA_DIR, f), ALT[name] || `${name.replace(/[-_]/g, ' ')} (sample artwork)`)
   }
   await uploadMedia('logo', path.join(BRAND_DIR, 'logo.jpg'), 'JaeTravel Expeditions logo: an elephant, a plane and acacia trees on an orange sunset', 'JaeTravel Expeditions')
-  const M = (k: string) => media[k] as any
+  const M = (k: string) => media[k] || media['mara-sunset'] || Object.values(media)[0] as any
   log(`media ready (${Object.keys(media).length})`)
 
   /* ---------------------------------------------------------------- globals */

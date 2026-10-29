@@ -1,8 +1,11 @@
+import { withLocale } from './routes'
+
 export function resolveHref(documentOrRef: any, locale: string = 'en'): string {
-  if (!documentOrRef) return `/${locale}`
+  if (!documentOrRef) return withLocale(locale, '/')
 
   if (typeof documentOrRef === 'string') {
-    return `/${locale}${documentOrRef.startsWith('/') ? documentOrRef : '/' + documentOrRef}`
+    const path = documentOrRef.startsWith('/') ? documentOrRef : '/' + documentOrRef
+    return withLocale(locale, path)
   }
 
   const { relationTo, value } = typeof documentOrRef === 'object' && 'relationTo' in documentOrRef ? documentOrRef : { relationTo: 'tours', value: documentOrRef }
@@ -15,18 +18,18 @@ export function resolveHref(documentOrRef: any, locale: string = 'en'): string {
       let prefix = 'tours'
       if (variant === 'budget') prefix = 'budget-tours'
       if (variant === 'accessible') prefix = 'disability-tours'
-      return `/${locale}/${prefix}/${slug}`
+      return withLocale(locale, `/${prefix}/${slug}`)
     }
     case 'offers':
-      return `/${locale}/offers/${slug}`
+      return withLocale(locale, `/offers/${slug}`)
     case 'joint-departures':
-      return `/${locale}/joint-safaris/${slug}`
+      return withLocale(locale, `/joint-safaris/${slug}`)
     case 'vehicles':
-      return `/${locale}/vehicle-hire/${slug}`
+      return withLocale(locale, `/vehicle-hire/${slug}`)
     case 'pages':
-      return `/${locale}${slug === 'home' || !slug ? '' : '/' + slug}`
+      return withLocale(locale, slug === 'home' || !slug ? '/' : `/${slug}`)
     default:
-      return `/${locale}/${slug}`
+      return withLocale(locale, `/${slug}`)
   }
 }
 

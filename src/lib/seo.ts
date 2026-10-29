@@ -5,7 +5,7 @@ import { absoluteUrl, mediaUrl } from './media'
 
 export const OG_LOCALE: Record<string, string> = { en: 'en_GB', de: 'de_DE', fr: 'fr_FR', it: 'it_IT', hi: 'hi_IN', zh: 'zh_CN', ar: 'ar_AR' }
 
-export const pageUrl = (ctx: Pick<SiteContext, 'origin'>, locale: string, path: string) => `${ctx.origin}/${locale}${path === '/' ? '' : path}`
+export const pageUrl = (ctx: Pick<SiteContext, 'origin'>, locale: string, path: string) => locale === 'en' ? `${ctx.origin}${path === '/' ? '' : path}` : `${ctx.origin}/${locale}${path === '/' ? '' : path}`
 
 export type MetaArgs = {
   ctx: SiteContext
