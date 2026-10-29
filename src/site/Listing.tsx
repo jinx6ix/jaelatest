@@ -11,6 +11,7 @@ import { docPath } from '@/lib/routes'
 import { Breadcrumbs } from './Breadcrumbs'
 import { JsonLd } from './JsonLd'
 import { DepartureRow, OfferCard, PostCard, TourCard, VehicleCard } from './Cards'
+import { TourListingClient } from './TourListingClient'
 import { RenderSiteBlocks } from './blocks'
 import { baseOrg } from './TourPage'
 import { MediaGalleryBlock } from './blocks'
@@ -105,15 +106,7 @@ export async function ListingPage({ ctx, routeKey, sp }: { ctx: SiteContext; rou
             {t('finder.submit')}
           </button>
         </form>
-        {tours.length ? (
-          <div className="jt-grid jt-grid--3">
-            {tours.map((x, i) => (
-              <TourCard key={x.id} tour={x} routes={routes} locale={locale} t={t} priority={i < 3} />
-            ))}
-          </div>
-        ) : (
-          <p className="jt-empty">{t('listing.empty')}</p>
-        )}
+        <TourListingClient tours={tours} routes={routes} locale={locale} t={t} />
       </>
     )
   } else if (src.collection === 'joint-departures') {
