@@ -68,7 +68,7 @@
 .jt-mobile summary::-webkit-details-marker{display:none}
 .jt-mobile details ul a{padding:.8rem 0 .8rem 1rem;font:500 1rem var(--font-body),sans-serif}
 .jt-mobile__cta{margin:1.2rem 0 1.5rem;width:100%}
-@media (max-width:1366px){.jt-nav{display:none}.jt-burger{display:inline-grid}.jt-header__cta{display:none}.jt-header__tools{margin-inline-start:auto}}
+@media (max-width:1024px){.jt-nav{display:none}.jt-burger{display:inline-grid}.jt-header__cta{display:none}.jt-header__tools{margin-inline-start:auto}}
 @media (max-width:560px){.jt-select--lang{display:none}}
 
 /* ---------- hero slider ---------- */
