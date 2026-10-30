@@ -74,7 +74,7 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URL || '',
     },
-    push: false,
+    push: true,
   }),
   collections: [Pages, Posts, Media, Categories, Users, Tours, Vehicles, Seasons, Offers, Hotels, JointDepartures, Destinations, Templates, GalleryItems, Inquiries, Clients, Reviews, FxRates, Countries],
   cors: [getServerSideURL()].filter(Boolean),

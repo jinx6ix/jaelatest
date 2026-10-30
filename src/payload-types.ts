@@ -567,6 +567,15 @@ export interface HomeHeroBlock {
    * 0 turns autoplay off.
    */
   autoplaySeconds?: number | null;
+  transition?: ('depth-turn' | 'cube' | 'fade') | null;
+  /**
+   * Enable mouse/finger 3D tilt parallax
+   */
+  tilt?: boolean | null;
+  /**
+   * Enable slow idle float animation
+   */
+  idleFloat?: boolean | null;
   slides?:
     | {
         kind: 'image' | 'youtube';
@@ -578,8 +587,51 @@ export interface HomeHeroBlock {
          * Paste the YouTube link. It plays muted and loops behind the text.
          */
         youtubeUrl?: string | null;
+        /**
+         * Gold line above headline, e.g. "JAETRAVEL EXPEDITIONS · KENYA"
+         */
+        eyebrow?: string | null;
+        /**
+         * Fallback headline if headline lines are empty
+         */
         headline: string;
+        /**
+         * Headline split into lines for 3D flip-up reveal (e.g. line 1: "EYES ON", line 2: "THE HORIZON")
+         */
+        headlineLines?:
+          | {
+              text: string;
+              id?: string | null;
+            }[]
+          | null;
         text?: string | null;
+        /**
+         * Capital sentence used in mobile portrait layout
+         */
+        tagline?: string | null;
+        /**
+         * Bullet points with gold dots between them for mobile layout (e.g. "Game drives")
+         */
+        chips?:
+          | {
+              text: string;
+              id?: string | null;
+            }[]
+          | null;
+        /**
+         * Show contact details bar at bottom of slide
+         */
+        showContact?: boolean | null;
+        focalPoint?: ('right' | 'left' | 'centre') | null;
+        /**
+         * Optional transparent PNG cutout of the subject for extra-deep 3D effect
+         */
+        cutout?: (number | null) | Media;
+        /**
+         * Dark gradient scrim strength (0-100)
+         */
+        scrim?: number | null;
+        depth?: ('soft' | 'strong' | 'none') | null;
         /**
          * Small label, for example the park name.
          */
@@ -2876,14 +2928,36 @@ export interface PagesSelect<T extends boolean = true> {
  */
 export interface HomeHeroBlockSelect<T extends boolean = true> {
   autoplaySeconds?: T;
+  transition?: T;
+  tilt?: T;
+  idleFloat?: T;
   slides?:
     | T
     | {
         kind?: T;
         image?: T;
         youtubeUrl?: T;
+        eyebrow?: T;
         headline?: T;
+        headlineLines?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
         text?: T;
+        tagline?: T;
+        chips?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        showContact?: T;
+        focalPoint?: T;
+        cutout?: T;
+        scrim?: T;
+        depth?: T;
         caption?: T;
         cta?:
           | T
@@ -4876,6 +4950,18 @@ export interface Theme {
    */
   whatsapp: string;
   /**
+   * Hero flyer background (hex, for example #1C1914)
+   */
+  heroDark: string;
+  /**
+   * Hero flyer headline and body text (hex, for example #F5EFE3)
+   */
+  heroCream: string;
+  /**
+   * Hero flyer gold line and button (hex, for example #E1A03E)
+   */
+  heroGold: string;
+  /**
    * Hex colour, for example #151311
    */
   darkGround: string;
@@ -5162,6 +5248,9 @@ export interface ThemeSelect<T extends boolean = true> {
   success?: T;
   danger?: T;
   whatsapp?: T;
+  heroDark?: T;
+  heroCream?: T;
+  heroGold?: T;
   darkGround?: T;
   darkSurface?: T;
   darkTint?: T;

@@ -27,13 +27,25 @@ const linkOf = (l: any, ctx: SiteContext) => (l?.label ? { label: l.label as str
 export async function HomeHeroBlock({ ctx, block }: B) {
   const slides: HeroSlideData[] = (block.slides || []).map((s: any) => {
     const img = imgData(s.image, s.headline)
+    const cutoutImg = imgData(s.cutout, '')
     const yt = s.kind === 'youtube' ? parseYouTubeId(s.youtubeUrl) : null
+    const lines = s.headlineLines?.length ? s.headlineLines.map((l: any) => l.text).filter(Boolean) : [s.headline]
+    const chips = (s.chips || []).map((c: any) => c.text).filter(Boolean)
     return {
       kind: yt ? 'youtube' : 'image',
       image: img ? { src: img.full, srcSet: mediaSrcSet(s.image), width: img.width, height: img.height, alt: img.alt || s.headline } : null,
+      cutout: cutoutImg ? { src: cutoutImg.full, alt: '' } : null,
       youtubeId: yt,
+      eyebrow: s.eyebrow,
+      headlineLines: lines,
       headline: s.headline,
       text: s.text,
+      tagline: s.tagline,
+      chips,
+      showContact: s.showContact ?? true,
+      focalPoint: s.focalPoint || 'right',
+      scrim: s.scrim ?? 70,
+      depth: s.depth || 'soft',
       caption: s.caption,
       cta: linkOf(s.cta, ctx),
       cta2: linkOf(s.secondaryCta, ctx),
@@ -41,7 +53,20 @@ export async function HomeHeroBlock({ ctx, block }: B) {
     }
   })
   if (!slides.length) return null
-  return <HeroSlider slides={slides} autoplay={(block.autoplaySeconds ?? 7) > 0} />
+  return (
+    <HeroSlider
+      slides={slides}
+      autoplay={(block.autoplaySeconds ?? 7) > 0}
+      transition={block.transition || 'depth-turn'}
+      tilt={block.tilt ?? true}
+      idleFloat={block.idleFloat ?? true}
+      contact={{
+        phone: ctx.company?.phoneNumber || '+254 726 485 228',
+        email: ctx.site?.contactEmail || 'info@jaetravel.co.ke',
+        website: ctx.origin ? ctx.origin.replace(/^https?:\/\//, '') : 'www.jaetravel.co.ke',
+      }}
+    />
+  )
 }
 
 export async function TripFinderBlock({ ctx }: B) {

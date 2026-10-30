@@ -40,6 +40,9 @@ export const Theme: GlobalConfig = {
             color('success', '#2E7D4F', 'Ticks'),
             color('danger', '#B3261E', 'Errors and crosses'),
             color('whatsapp', '#25D366', 'WhatsApp button'),
+            color('heroDark', '#1C1914', 'Hero flyer background'),
+            color('heroCream', '#F5EFE3', 'Hero flyer headline and body text'),
+            color('heroGold', '#E1A03E', 'Hero flyer gold line and button'),
           ],
         },
         {

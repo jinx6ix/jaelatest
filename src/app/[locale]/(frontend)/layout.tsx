@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Figtree, Montserrat } from 'next/font/google'
+import { Figtree, Montserrat, Oswald, DM_Sans } from 'next/font/google'
 import { notFound } from 'next/navigation'
 import { draftMode } from 'next/headers'
 import React from 'react'
@@ -24,6 +24,8 @@ import './site.css'
 
 const display = Montserrat({ subsets: ['latin', 'latin-ext'], weight: ['600', '700', '800'], style: ['normal', 'italic'], variable: '--font-display', display: 'swap' })
 const body = Figtree({ subsets: ['latin', 'latin-ext'], weight: ['400', '500', '600'], variable: '--font-body', display: 'swap' })
+const heroDisplay = Oswald({ subsets: ['latin'], weight: ['600', '700'], variable: '--font-hero-display', display: 'swap' })
+const heroBody = DM_Sans({ subsets: ['latin'], weight: ['400', '500', '600'], variable: '--font-hero-body', display: 'swap' })
 
 type Props = { children: React.ReactNode; params: Promise<{ locale: string }> }
 
@@ -36,7 +38,7 @@ export default async function RootLayout({ children, params }: Props) {
   const currencies = ((ctx.site as any)?.currencies || []).map((c: any) => ({ code: c.code, rate: c.rate }))
 
   return (
-    <html className={cn(display.variable, body.variable)} lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'} suppressHydrationWarning>
+    <html className={cn(display.variable, body.variable, heroDisplay.variable, heroBody.variable)} lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'} suppressHydrationWarning>
       <head>
         <InitTheme />
         <ThemeStyle theme={ctx.theme} />
