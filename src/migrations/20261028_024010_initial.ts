@@ -2653,6 +2653,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   CREATE TABLE "media" (
   	"id" serial PRIMARY KEY NOT NULL,
+  	"_objectkey" varchar,
   	"credit_text" varchar,
   	"copyright_notice" varchar,
   	"caption" jsonb,
