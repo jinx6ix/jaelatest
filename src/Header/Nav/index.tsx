@@ -16,14 +16,18 @@ export const HeaderNav: React.FC<{ data: HeaderType }> = ({ data }) => {
       {items.map((item, i) => {
         const href = item.routeKey === 'custom' ? item.url || '/' : `/${item.routeKey}`
         return (
-          <Link key={i} href={href} className="text-foreground hover:text-primary">
+          <Link
+            key={i}
+            href={href}
+            className="text-foreground hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 rounded px-2 py-1 transition-colors"
+          >
             {item.label}
           </Link>
         )
       })}
-      <Link href="/search">
+      <Link href="/search" className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 rounded p-1">
         <span className="sr-only">Search</span>
-        <SearchIcon className="w-5 text-primary" />
+        <SearchIcon className="w-5 text-primary" aria-hidden="true" />
       </Link>
       <LanguageSwitcher />
     </nav>
