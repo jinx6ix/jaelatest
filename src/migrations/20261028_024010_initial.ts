@@ -1,7 +1,17 @@
 ﻿import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
 
 export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
-  await db.execute(sql`
+  try {
+    const res = await db.execute(sql`SELECT to_regclass('public.media')`);
+    const row = res?.rows?.[0] || (res as any)?.[0];
+    if (row?.to_regclass) {
+      await db.execute(sql`ALTER TABLE "media" ADD COLUMN IF NOT EXISTS "_objectkey" varchar;`);
+      return;
+    }
+  } catch (e) {}
+
+  try {
+    await db.execute(sql`
    CREATE TYPE "public"."_locales" AS ENUM('en', 'de', 'fr', 'it', 'hi', 'zh', 'ar');
   CREATE TYPE "public"."enum_pages_hero_links_link_type" AS ENUM('reference', 'custom');
   CREATE TYPE "public"."enum_pages_hero_links_link_appearance" AS ENUM('default', 'outline');
@@ -5405,6 +5415,11 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "translations_entries_order_idx" ON "translations_entries" USING btree ("_order");
   CREATE INDEX "translations_entries_parent_id_idx" ON "translations_entries" USING btree ("_parent_id");
   CREATE UNIQUE INDEX "translations_entries_locales_locale_parent_id_unique" ON "translations_entries_locales" USING btree ("_locale","_parent_id");`)
+  } catch (err) {
+    await db.execute(sql`
+      ALTER TABLE "media" ADD COLUMN IF NOT EXISTS "_objectkey" varchar;
+    `)
+  }
 }
 
 export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
