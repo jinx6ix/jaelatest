@@ -1,4 +1,4 @@
-import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
+﻿import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
 
 export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
@@ -2699,7 +2699,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"sizes_og_height" numeric,
   	"sizes_og_mime_type" varchar,
   	"sizes_og_filesize" numeric,
-  	"sizes_og_filename" varchar
+  	"sizes_og_filename" varchar,\n\t  	"_objectkey" varchar
   );
   
   CREATE TABLE "media_locales" (
@@ -5927,3 +5927,4 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TYPE "public"."enum_site_settings_social_platform";
   DROP TYPE "public"."enum_routes_routes_key";`)
 }
+
