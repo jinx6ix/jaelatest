@@ -25,7 +25,7 @@ export const generatePreviewPath = ({ collection, slug }: Props) => {
     previewSecret: process.env.PREVIEW_SECRET || '',
   } satisfies PreviewSearchParams)
 
-  const url = `/next/preview?${encodedParams.toString()}`
+  const url = `/en/next/preview?${encodedParams.toString()}`
 
   return url
 }
