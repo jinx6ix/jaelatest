@@ -123,7 +123,7 @@
 .jt-prog__bar{display:block;height:4px;border-radius:0px;background:rgba(245,239,227,.25);overflow:hidden}
 .jt-prog__fill{display:block;height:100%;width:0;background:var(--jt-hero-gold,#E1A03E);border-radius:0px}
 .jt-prog__fill.is-done{width:100%}
-.jt-prog button[aria-current="true"] .jt-prog__fill{width:100%}
+.jt-prog button[aria-current="true"] .jt-prog__fill:not(.is-run){width:100%}
 .jt-prog__fill.is-run{width:0;animation:jt-fill linear forwards}
 @keyframes jt-fill{from{width:0}to{width:100%}}
 
