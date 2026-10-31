@@ -178,7 +178,7 @@ export function HeroSlider({
         }}
         onPointerCancel={() => (startX.current = null)}
       >
-        <div className="jt-hero__track">
+        <div className="jt-hero__track" style={{ transform: `translateX(-${i * 100}%)` }}>
           {slides.map((s, k) => {
             const isActive = k === i
             const isPrev = k === (i - 1 + n) % n
