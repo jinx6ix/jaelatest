@@ -97,8 +97,7 @@ export const plugins: Plugin[] = [
             media: true,
           },
           token: process.env.BLOB_READ_WRITE_TOKEN,
-          // @ts-expect-error - Vercel Blob store is private
-          access: 'private',
+          access: 'public',
         }),
       ]
     : []),
