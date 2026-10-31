@@ -49,14 +49,14 @@ export async function HomeHeroBlock({ ctx, block }: B) {
       caption: s.caption,
       cta: linkOf(s.cta, ctx),
       cta2: linkOf(s.secondaryCta, ctx),
-      duration: s.durationSeconds || block.autoplaySeconds || 7,
+      duration: s.durationSeconds || block.autoplaySeconds || 3,
     }
   })
   if (!slides.length) return null
   return (
     <HeroSlider
       slides={slides}
-      autoplay={(block.autoplaySeconds ?? 7) > 0}
+      autoplay={(block.autoplaySeconds ?? 3) > 0}
       transition={block.transition || 'depth-turn'}
       tilt={block.tilt ?? true}
       idleFloat={block.idleFloat ?? true}

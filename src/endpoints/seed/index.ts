@@ -292,7 +292,7 @@ export async function seedSite(payload: Payload, opts: { fresh?: boolean } = {})
   await page('Home', 'home', [
     {
       blockType: 'homeHero',
-      autoplaySeconds: 7,
+      autoplaySeconds: 3,
       transition: 'depth-turn',
       tilt: true,
       idleFloat: true,

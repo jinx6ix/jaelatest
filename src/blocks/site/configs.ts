@@ -8,7 +8,7 @@ export const HomeHero: Block = {
   interfaceName: 'HomeHeroBlock',
   labels: { singular: 'Hero slider', plural: 'Hero sliders' },
   fields: [
-    { name: 'autoplaySeconds', type: 'number', defaultValue: 7, min: 0, admin: { description: '0 turns autoplay off.' } },
+    { name: 'autoplaySeconds', type: 'number', defaultValue: 3, min: 0, admin: { description: '0 turns autoplay off.' } },
     { name: 'transition', type: 'select', defaultValue: 'depth-turn', options: [{ label: '3D Depth Turn', value: 'depth-turn' }, { label: 'Cube', value: 'cube' }, { label: 'Fade', value: 'fade' }] },
     { name: 'tilt', type: 'checkbox', defaultValue: true, admin: { description: 'Enable mouse/finger 3D tilt parallax' } },
     { name: 'idleFloat', type: 'checkbox', defaultValue: true, admin: { description: 'Enable slow idle float animation' } },
