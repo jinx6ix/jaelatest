@@ -7,14 +7,13 @@ export const getServerSideURL = () => {
       ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
       : process.env.VERCEL_URL
       ? `https://${process.env.VERCEL_URL}`
+      : process.env.VERCEL === '1'
+      ? 'https://www.jaetravel.co.ke'
       : 'http://localhost:3000')
   ).replace(/\/$/, '')
 
   if (process.env.NODE_ENV === 'production' && process.env.VERCEL === '1' && (url.includes('localhost') || url.includes('127.0.0.1'))) {
-    console.error('ERROR: Production server URL cannot be localhost or 127.0.0.1. Set NEXT_PUBLIC_SERVER_URL or VERCEL_PROJECT_PRODUCTION_URL.')
-    if (typeof window === 'undefined') {
-      throw new Error('Production server URL is misconfigured (localhost).')
-    }
+    return 'https://www.jaetravel.co.ke'
   }
 
   return url
@@ -33,7 +32,7 @@ export const getClientSideURL = () => {
     return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
   }
 
-  return process.env.NEXT_PUBLIC_SERVER_URL || ''
+  return process.env.NEXT_PUBLIC_SERVER_URL || 'https://www.jaetravel.co.ke'
 }
 
 export async function isProductionHost(): Promise<boolean> {
@@ -47,8 +46,7 @@ export async function isProductionHost(): Promise<boolean> {
     }
   } catch {}
 
-  if (process.env.NODE_ENV === 'production' && process.env.VERCEL_PROJECT_PRODUCTION_URL) {
-    // If running on production deployment and production url is set
+  if (process.env.NODE_ENV === 'production') {
     return true
   }
 
