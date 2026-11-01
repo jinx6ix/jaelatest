@@ -1,8 +1,6 @@
 import type { Metadata } from 'next'
 
 import type { Media, Page, Post, Config } from '../payload-types'
-
-import { mergeOpenGraph } from './mergeOpenGraph'
 import { getServerSideURL } from './getURL'
 
 const getImageURL = (image?: Media | Config['db']['defaultIDType'] | null) => {
@@ -20,30 +18,43 @@ const getImageURL = (image?: Media | Config['db']['defaultIDType'] | null) => {
 }
 
 export const generateMeta = async (args: {
-  doc: Partial<Page> | Partial<Post> | null
+  doc: Partial<Page> | Partial<Post> | any
+  locale?: string
+  path?: string
 }): Promise<Metadata> => {
-  const { doc } = args
+  const { doc, locale = 'en', path = '' } = args
+  const serverUrl = getServerSideURL()
+  const ogImage = getImageURL(doc?.meta?.image || doc?.heroImage || doc?.image)
 
-  const ogImage = getImageURL(doc?.meta?.image)
+  const title = doc?.meta?.title || doc?.title || 'JaeTravel Expeditions'
+  const description = doc?.meta?.description || doc?.summary || doc?.excerpt || 'Experience the best African safaris, wildlife adventures, and bespoke expeditions with JaeTravel Expeditions.'
+  const fullTitle = title.includes('JaeTravel') ? title : `${title} | JaeTravel Expeditions`
 
-  const title = doc?.meta?.title
-    ? doc?.meta?.title + ' | Payload Website Template'
-    : 'Payload Website Template'
+  const slugPath = Array.isArray(doc?.slug) ? doc.slug.join('/') : doc?.slug || path
+  const prefix = locale === 'en' ? '' : `/${locale}`
+  const canonicalUrl = `${serverUrl}${prefix}${slugPath.startsWith('/') ? slugPath : `/${slugPath}`}`.replace(/([^:]\/)\/+/g, '$1')
 
   return {
-    description: doc?.meta?.description,
-    openGraph: mergeOpenGraph({
-      description: doc?.meta?.description || '',
-      images: ogImage
-        ? [
-            {
-              url: ogImage,
-            },
-          ]
-        : undefined,
-      title,
-      url: Array.isArray(doc?.slug) ? doc?.slug.join('/') : '/',
-    }),
-    title,
+    metadataBase: new URL(serverUrl),
+    title: { absolute: fullTitle },
+    description,
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    openGraph: {
+      type: 'website',
+      url: canonicalUrl,
+      title: fullTitle,
+      description,
+      siteName: 'JaeTravel Expeditions',
+      locale: locale === 'en' ? 'en_GB' : locale,
+      images: ogImage ? [{ url: ogImage, width: 1200, height: 630, alt: title }] : undefined,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: fullTitle,
+      description,
+      images: ogImage ? [ogImage] : undefined,
+    },
   }
 }

@@ -11,7 +11,8 @@ import RichText from '@/components/RichText'
 import type { Post } from '@/payload-types'
 
 import { PostHero } from '@/heros/PostHero'
-import { generateMeta } from '@/utilities/generateMeta'
+import { buildMetadata } from '@/lib/seo'
+import { getSiteContext } from '@/lib/site'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 
@@ -87,11 +88,19 @@ export default async function Post({ params: paramsPromise }: Args) {
 
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
   const { slug = '', locale } = await paramsPromise
-  // Decode to support slugs with special characters
   const decodedSlug = decodeURIComponent(slug)
-  const post = await queryPostBySlug({ slug: decodedSlug, locale })
+  const post: any = await queryPostBySlug({ slug: decodedSlug, locale })
+  const ctx = await getSiteContext(locale)
 
-  return generateMeta({ doc: post })
+  return buildMetadata({
+    ctx,
+    path: `/posts/${decodedSlug}`,
+    title: post?.meta?.title || post?.title || decodedSlug,
+    description: post?.meta?.description || (post as any)?.excerpt,
+    image: post?.meta?.image || post?.heroImage,
+    type: 'article',
+    publishedTime: post?.publishedAt || post?.createdAt,
+  })
 }
 
 const queryPostBySlug = cache(async ({ slug, locale }: { slug: string; locale: string }) => {

@@ -5,7 +5,7 @@ import { draftMode } from 'next/headers'
 import React, { cache } from 'react'
 
 import { PayloadRedirects } from '@/components/PayloadRedirects'
-import { generateMeta } from '@/utilities/generateMeta'
+import { buildMetadata } from '@/lib/seo'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { getSiteContext } from '@/lib/site'
@@ -42,9 +42,16 @@ export default async function TourPage({ params: paramsPromise }: Args) {
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
   const { slug = '', locale } = await paramsPromise
   const decodedSlug = decodeURIComponent(slug)
-  const tour = await queryTourBySlug({ slug: decodedSlug, locale })
+  const tour = (await queryTourBySlug({ slug: decodedSlug, locale })) as any
+  const ctx = await getSiteContext(locale)
 
-  return generateMeta({ doc: tour })
+  return buildMetadata({
+    ctx,
+    path: `/tours/${decodedSlug}`,
+    title: tour?.meta?.title || tour?.title || decodedSlug,
+    description: tour?.meta?.description || tour?.summary,
+    image: tour?.meta?.image || tour?.heroImage || tour?.gallery?.[0]?.image,
+  })
 }
 
 const queryTourBySlug = cache(async ({ slug, locale }: { slug: string; locale: string }) => {
