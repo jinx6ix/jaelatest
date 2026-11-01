@@ -5,6 +5,8 @@ export const asMedia = (m: unknown): Media | null => (m && typeof m === 'object'
 type SizeName = 'thumbnail' | 'square' | 'small' | 'medium' | 'large' | 'xlarge' | 'og'
 
 export const mediaUrl = (m: unknown, size?: SizeName): string | null => {
+  if (!m) return null
+  if (typeof m === 'string') return m
   const media = asMedia(m)
   if (!media) return null
   const s = size ? (media.sizes as any)?.[size]?.url : null

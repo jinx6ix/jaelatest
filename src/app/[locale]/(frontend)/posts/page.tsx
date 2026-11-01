@@ -1,4 +1,4 @@
-import type { Metadata } from 'next/types'
+import type { Metadata } from 'next'
 
 import { CollectionArchive } from '@/components/CollectionArchive'
 import { PageRange } from '@/components/PageRange'
@@ -7,11 +7,18 @@ import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import React from 'react'
 import PageClient from './page.client'
+import { buildMetadata } from '@/lib/seo'
+import { getSiteContext } from '@/lib/site'
 
 export const dynamic = 'force-static'
 export const revalidate = 600
 
-export default async function Page() {
+type Args = {
+  params: Promise<{ locale: string }>
+}
+
+export default async function Page({ params }: Args) {
+  const { locale = 'en' } = await params
   const payload = await getPayload({ config: configPromise })
 
   const posts = await payload.find({
@@ -19,11 +26,13 @@ export default async function Page() {
     depth: 1,
     limit: 12,
     overrideAccess: false,
+    locale: locale as any,
     select: {
       title: true,
       slug: true,
       categories: true,
       meta: true,
+      heroImage: true,
     },
   })
 
@@ -32,7 +41,7 @@ export default async function Page() {
       <PageClient />
       <div className="container mb-16">
         <div className="prose dark:prose-invert max-w-none">
-          <h1>Posts</h1>
+          <h1>Safari & Travel Blog</h1>
         </div>
       </div>
 
@@ -56,8 +65,13 @@ export default async function Page() {
   )
 }
 
-export function generateMetadata(): Metadata {
-  return {
-    title: `Payload Website Template Posts`,
-  }
+export async function generateMetadata({ params }: Args): Promise<Metadata> {
+  const { locale = 'en' } = await params
+  const ctx = await getSiteContext(locale)
+  return buildMetadata({
+    ctx,
+    path: '/posts',
+    title: 'Safari & Travel Blog',
+    description: 'Read expert guides, wildlife tips, and travel stories from JaeTravel Expeditions.',
+  })
 }

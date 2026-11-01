@@ -22,6 +22,7 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
   const result = await payload.find({
     collection: 'tours',
     limit: 1,
+    depth: 2,
     locale: locale as any,
     where: { slug: { equals: decodedSlug } },
   })
