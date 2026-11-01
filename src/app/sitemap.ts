@@ -18,7 +18,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const add = (path: string, opts: { lastModified?: string | Date; priority?: number; changeFrequency?: Entry['changeFrequency']; images?: string[]; videos?: Entry['videos'] } = {}) => {
     const languages: Record<string, string> = {}
-    for (const l of LOCALES) languages[l] = `${origin}/${l}${path === '/' ? '' : path}`
+    for (const l of LOCALES) {
+      languages[l] = l === 'en' ? `${origin}${path === '/' ? '' : path}` : `${origin}/${l}${path === '/' ? '' : path}`
+    }
     languages['x-default'] = languages.en
     for (const l of LOCALES) {
       entries.push({

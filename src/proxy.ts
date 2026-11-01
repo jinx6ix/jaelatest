@@ -4,10 +4,10 @@ import type { NextRequest } from 'next/server'
 const LOCALES = ['en', 'de', 'fr', 'it', 'hi', 'zh', 'ar']
 const PUBLIC_FILE = /\.(.*)$/
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
-  // Skip api, admin, next internals, and static files
+  // Skip api, admin, next internals, and static files (except .md)
   if (
     pathname.startsWith('/api') ||
     pathname.startsWith('/admin') ||
@@ -17,8 +17,21 @@ export function middleware(request: NextRequest) {
     pathname === '/sitemap.xml' ||
     pathname === '/rss.xml' ||
     pathname === '/llms.txt' ||
-    PUBLIC_FILE.test(pathname)
+    pathname === '/llms-full.txt' ||
+    pathname === '/merchant-feed.xml'
   ) {
+    return NextResponse.next()
+  }
+
+  // Handle markdown alternate requests ending in .md
+  if (pathname.endsWith('.md')) {
+    const url = request.nextUrl.clone()
+    url.pathname = '/api/markdown'
+    url.searchParams.set('path', pathname)
+    return NextResponse.rewrite(url)
+  }
+
+  if (PUBLIC_FILE.test(pathname)) {
     return NextResponse.next()
   }
 
@@ -27,7 +40,7 @@ export function middleware(request: NextRequest) {
     const cleanPath = pathname === '/en' ? '/' : pathname.replace(/^\/en/, '')
     const url = request.nextUrl.clone()
     url.pathname = cleanPath
-    return NextResponse.redirect(url, 301)
+    return NextResponse.redirect(url, 308)
   }
 
   // Check if pathname already starts with another locale (de, fr, etc.)

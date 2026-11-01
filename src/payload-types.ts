@@ -4834,10 +4834,50 @@ export interface SiteSetting {
     enableFaqSchema?: boolean | null;
     googleSiteVerification?: string | null;
     /**
-     * Google Merchant markup applies to physical goods. Keep OFF for tours and vehicle hire unless you sell physical products.
+     * Allow AI training crawlers (GPTBot, ClaudeBot, Google-Extended, CCBot) in robots.txt
+     */
+    aiCrawlers?: boolean | null;
+    preferredSource?: {
+      /**
+       * Show Add as preferred source button next to WhatsApp
+       */
+      enabled?: boolean | null;
+    };
+    /**
+     * Google Merchant Center feed, policies and store quality settings.
      */
     merchant?: {
       enabled?: boolean | null;
+      merchantId?: string | null;
+      feedEnabled?: boolean | null;
+      returnPolicy?: {
+        category?: ('finite-window' | 'not-permitted' | 'unlimited-window') | null;
+        days?: number | null;
+        refundType?: ('full' | 'exchange' | 'store-credit') | null;
+        fees?: ('free' | 'customer-pays' | 'restocking') | null;
+        method?: ('by-mail' | 'in-store' | 'at-kiosk') | null;
+        /**
+         * Comma-separated ISO country codes, e.g. KE, US, GB
+         */
+        countries?: string | null;
+        pageSlug?: (number | null) | Page;
+      };
+      shipping?: {
+        mode?: ('does-not-ship' | 'digital' | 'ships') | null;
+        rate?: number | null;
+        handlingDays?: number | null;
+        transitDays?: number | null;
+        countries?: string | null;
+        pageSlug?: (number | null) | Page;
+      };
+      storeQuality?: {
+        widgetEnabled?: boolean | null;
+        position?: string | null;
+        region?: string | null;
+      };
+      customerReviews?: {
+        optInEnabled?: boolean | null;
+      };
     };
   };
   updatedAt?: string | null;
@@ -5182,10 +5222,51 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         canonicalOrigin?: T;
         enableFaqSchema?: T;
         googleSiteVerification?: T;
+        aiCrawlers?: T;
+        preferredSource?:
+          | T
+          | {
+              enabled?: T;
+            };
         merchant?:
           | T
           | {
               enabled?: T;
+              merchantId?: T;
+              feedEnabled?: T;
+              returnPolicy?:
+                | T
+                | {
+                    category?: T;
+                    days?: T;
+                    refundType?: T;
+                    fees?: T;
+                    method?: T;
+                    countries?: T;
+                    pageSlug?: T;
+                  };
+              shipping?:
+                | T
+                | {
+                    mode?: T;
+                    rate?: T;
+                    handlingDays?: T;
+                    transitDays?: T;
+                    countries?: T;
+                    pageSlug?: T;
+                  };
+              storeQuality?:
+                | T
+                | {
+                    widgetEnabled?: T;
+                    position?: T;
+                    region?: T;
+                  };
+              customerReviews?:
+                | T
+                | {
+                    optInEnabled?: T;
+                  };
             };
       };
   updatedAt?: T;

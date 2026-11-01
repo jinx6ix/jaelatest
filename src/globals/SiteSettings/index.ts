@@ -62,7 +62,7 @@ export const SiteSettings: GlobalConfig = {
         },
         {
           name: 'seo',
-          label: 'SEO',
+          label: 'SEO & Merchant',
           fields: [
             { name: 'titleSuffix', type: 'text', localized: true, defaultValue: 'JaeTravel Expeditions' },
             { name: 'defaultDescription', type: 'textarea', localized: true },
@@ -70,11 +70,60 @@ export const SiteSettings: GlobalConfig = {
             { name: 'canonicalOrigin', type: 'text', admin: { description: 'Full site address used in canonical tags and sitemaps, for example https://jaetravel.co.ke. Leave empty to use NEXT_PUBLIC_SERVER_URL.' } },
             { name: 'enableFaqSchema', type: 'checkbox', defaultValue: true },
             { name: 'googleSiteVerification', type: 'text' },
+            { name: 'aiCrawlers', type: 'checkbox', defaultValue: true, admin: { description: 'Allow AI training crawlers (GPTBot, ClaudeBot, Google-Extended, CCBot) in robots.txt' } },
+            {
+              name: 'preferredSource',
+              type: 'group',
+              fields: [{ name: 'enabled', type: 'checkbox', defaultValue: false, admin: { description: 'Show Add as preferred source button next to WhatsApp' } }],
+            },
             {
               name: 'merchant',
               type: 'group',
-              admin: { description: 'Google Merchant markup applies to physical goods. Keep OFF for tours and vehicle hire unless you sell physical products.' },
-              fields: [{ name: 'enabled', type: 'checkbox', defaultValue: false }],
+              admin: { description: 'Google Merchant Center feed, policies and store quality settings.' },
+              fields: [
+                { name: 'enabled', type: 'checkbox', defaultValue: false },
+                { name: 'merchantId', type: 'text', defaultValue: '5694347760' },
+                { name: 'feedEnabled', type: 'checkbox', defaultValue: false },
+                {
+                  name: 'returnPolicy',
+                  type: 'group',
+                  fields: [
+                    { name: 'category', type: 'select', options: [{ label: 'Finite Return Window', value: 'finite-window' }, { label: 'Not Permitted', value: 'not-permitted' }, { label: 'Unlimited Window', value: 'unlimited-window' }] },
+                    { name: 'days', type: 'number', admin: { condition: (_, s) => s?.category === 'finite-window' } },
+                    { name: 'refundType', type: 'select', options: ['full', 'exchange', 'store-credit'] },
+                    { name: 'fees', type: 'select', options: ['free', 'customer-pays', 'restocking'] },
+                    { name: 'method', type: 'select', options: ['by-mail', 'in-store', 'at-kiosk'] },
+                    { name: 'countries', type: 'text', admin: { description: 'Comma-separated ISO country codes, e.g. KE, US, GB' } },
+                    { name: 'pageSlug', type: 'relationship', relationTo: 'pages' },
+                  ],
+                },
+                {
+                  name: 'shipping',
+                  type: 'group',
+                  fields: [
+                    { name: 'mode', type: 'select', options: [{ label: 'Does not ship (In-person service)', value: 'does-not-ship' }, { label: 'Digital', value: 'digital' }, { label: 'Ships', value: 'ships' }] },
+                    { name: 'rate', type: 'number', admin: { condition: (_, s) => s?.mode === 'ships' } },
+                    { name: 'handlingDays', type: 'number', admin: { condition: (_, s) => s?.mode === 'ships' } },
+                    { name: 'transitDays', type: 'number', admin: { condition: (_, s) => s?.mode === 'ships' } },
+                    { name: 'countries', type: 'text', admin: { condition: (_, s) => s?.mode === 'ships' } },
+                    { name: 'pageSlug', type: 'relationship', relationTo: 'pages' },
+                  ],
+                },
+                {
+                  name: 'storeQuality',
+                  type: 'group',
+                  fields: [
+                    { name: 'widgetEnabled', type: 'checkbox', defaultValue: false },
+                    { name: 'position', type: 'text' },
+                    { name: 'region', type: 'text' },
+                  ],
+                },
+                {
+                  name: 'customerReviews',
+                  type: 'group',
+                  fields: [{ name: 'optInEnabled', type: 'checkbox', defaultValue: false }],
+                },
+              ],
             },
           ],
         },
