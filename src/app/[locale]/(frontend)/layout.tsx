@@ -16,7 +16,7 @@ import { CurrencyProvider } from '@/site/CurrencyProvider'
 import { ThemeStyle } from '@/site/ThemeStyle'
 import { Header } from '@/site/Header'
 import { Footer } from '@/site/Footer'
-import { WhatsAppButton } from '@/site/WhatsAppButton'
+import { FloatingActions } from '@/site/FloatingActions'
 import { buildMetadata } from '@/lib/seo'
 
 import './globals.css'
@@ -55,7 +55,11 @@ export default async function RootLayout({ children, params }: Props) {
               <Header ctx={ctx} />
               <main id="main">{children}</main>
               <Footer ctx={ctx} />
-              <WhatsAppButton ctx={ctx} />
+              <FloatingActions
+                whatsappNumber={ctx.site?.whatsappNumber || ''}
+                whatsappMessage={(ctx.site as any)?.whatsappMessage}
+                preferredSourceEnabled={true}
+              />
             </CurrencyProvider>
           </I18nProvider>
         </Providers>
