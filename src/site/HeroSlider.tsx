@@ -196,6 +196,7 @@ export function HeroSlider({
                 aria-roledescription="slide"
                 aria-label={t('hero.slideOf', { n: k + 1, total: n })}
                 aria-hidden={!isActive}
+                {...(!isActive ? { inert: true } : {})}
                 style={{ ['--kb' as any]: `${Math.max(s.duration, 6) + 2}s`, '--scrim-opacity': s.scrim / 100 } as any}
               >
                 {/* Layer 1: Photo / Video */}
@@ -220,7 +221,6 @@ export function HeroSlider({
                       src={ytEmbedUrl(s.youtubeId, { background: true })}
                       title={s.headline}
                       allow="autoplay; encrypted-media"
-                      tabIndex={-1}
                       aria-hidden="true"
                       loading="lazy"
                     />
@@ -235,15 +235,27 @@ export function HeroSlider({
                   <div className="jt-slide__content">
                     {s.eyebrow && <div className="jt-slide__eyebrow">{s.eyebrow}</div>}
 
-                    <h2 className="jt-slide__headline">
-                      {s.headlineLines.map((line, idx) => (
-                        <span key={idx} className="jt-slide__line-wrap">
-                          <span className="jt-slide__line" style={{ transitionDelay: `${idx * 90}ms` }}>
-                            {line}
+                    {k === 0 ? (
+                      <h1 className="jt-slide__headline">
+                        {s.headlineLines.map((line, idx) => (
+                          <span key={idx} className="jt-slide__line-wrap">
+                            <span className="jt-slide__line" style={{ transitionDelay: `${idx * 90}ms` }}>
+                              {line}{idx < s.headlineLines.length - 1 ? ' ' : ''}
+                            </span>
                           </span>
-                        </span>
-                      ))}
-                    </h2>
+                        ))}
+                      </h1>
+                    ) : (
+                      <h2 className="jt-slide__headline">
+                        {s.headlineLines.map((line, idx) => (
+                          <span key={idx} className="jt-slide__line-wrap">
+                            <span className="jt-slide__line" style={{ transitionDelay: `${idx * 90}ms` }}>
+                              {line}{idx < s.headlineLines.length - 1 ? ' ' : ''}
+                            </span>
+                          </span>
+                        ))}
+                      </h2>
+                    )}
 
                     {s.text && <p className="jt-slide__text">{s.text}</p>}
 
@@ -259,12 +271,12 @@ export function HeroSlider({
 
                     <div className="jt-slide__cta">
                       {s.cta && (
-                        <Link href={s.cta.href} className="jt-btn jt-btn--gold" tabIndex={isActive ? 0 : -1}>
+                        <Link href={s.cta.href} className="jt-btn jt-btn--gold">
                           {s.cta.label} <IconArrow size={18} />
                         </Link>
                       )}
                       {s.cta2 && (
-                        <Link href={s.cta2.href} className="jt-btn jt-btn--ghost-cream" tabIndex={isActive ? 0 : -1}>
+                        <Link href={s.cta2.href} className="jt-btn jt-btn--ghost-cream">
                           {s.cta2.label}
                         </Link>
                       )}

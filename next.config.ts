@@ -9,7 +9,7 @@ import { redirects } from './redirects'
 
 const NEXT_PUBLIC_SERVER_URL = process.env.VERCEL_PROJECT_PRODUCTION_URL
   ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-  : process.env.__NEXT_PRIVATE_ORIGIN || 'http://localhost:3000'
+  : process.env.__NEXT_PRIVATE_ORIGIN || 'https://www.jaetravel.co.ke'
 
 const nextConfig: NextConfig = {
   experimental: {
@@ -17,22 +17,24 @@ const nextConfig: NextConfig = {
       bodySizeLimit: '50mb',
     },
   },
-  // Temporarily required on Windows until Next.js fixes Turbopack Sass resolution.
-  // See: https://github.com/vercel/next.js/issues/86431
   sassOptions: {
     loadPaths: ['./node_modules/@payloadcms/ui/dist/scss/'],
   },
   images: {
+    formats: ['image/avif', 'image/webp'],
+    minimumCacheTTL: 31536000,
+    qualities: [60, 75, 85],
     localPatterns: [
       {
         pathname: '/api/media/file/**',
       },
+      {
+        pathname: '/brand/**',
+      },
     ],
-    qualities: [100],
     remotePatterns: [
-      ...[NEXT_PUBLIC_SERVER_URL /* 'https://example.com' */].map((item) => {
+      ...[NEXT_PUBLIC_SERVER_URL].map((item) => {
         const url = new URL(item)
-
         return {
           hostname: url.hostname,
           protocol: url.protocol.replace(':', '') as 'http' | 'https',
@@ -41,6 +43,10 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: '**.blob.vercel-storage.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'ik.imagekit.io',
       },
     ],
   },
@@ -67,7 +73,6 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        // Public pages carry no per-visitor data (currency and theme live in the browser), so CDNs may cache them briefly.
         source: '/:locale(en|de|fr|it|hi|zh|ar)/:path*',
         headers: [{ key: 'Cache-Control', value: 'public, max-age=0, s-maxage=300, stale-while-revalidate=86400' }],
       },

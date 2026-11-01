@@ -3,6 +3,7 @@ import { getPayloadClient, getSiteContext } from '@/lib/site'
 import { LOCALES, docPath, pathFor, type RouteKey } from '@/lib/routes'
 import { absoluteUrl, mediaUrl } from '@/lib/media'
 import { parseYouTubeId, ytEmbedUrl, ytThumbnail } from '@/lib/youtube'
+import { isProductionHost } from '@/utilities/getURL'
 
 // Rendered on request (needs the database), so the build does not.
 export const dynamic = 'force-dynamic'
@@ -10,6 +11,11 @@ export const dynamic = 'force-dynamic'
 type Entry = MetadataRoute.Sitemap[number]
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const isProd = await isProductionHost()
+  if (!isProd) {
+    return []
+  }
+
   const ctx = await getSiteContext('en')
   const payload = await getPayloadClient()
   const { origin, routes } = ctx

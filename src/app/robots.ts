@@ -1,9 +1,22 @@
 import type { MetadataRoute } from 'next'
 import { getSiteContext } from '@/lib/site'
+import { isProductionHost } from '@/utilities/getURL'
 
 export const dynamic = 'force-dynamic'
 
 export default async function robots(): Promise<MetadataRoute.Robots> {
+  const isProd = await isProductionHost()
+  if (!isProd) {
+    return {
+      rules: [
+        {
+          userAgent: '*',
+          disallow: '/',
+        },
+      ],
+    }
+  }
+
   const { origin, site } = await getSiteContext('en')
   const aiCrawlers = (site?.seo as any)?.aiCrawlers !== false
 
