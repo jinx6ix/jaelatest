@@ -10,7 +10,7 @@ export const GalleryBlock: React.FC<GalleryProps> = ({ images }) => {
           return (
             <div key={id || i} className="aspect-video bg-muted rounded-lg overflow-hidden border border-border">
               {img?.url ? (
-                <img src={img.url} alt={img.alt || 'Gallery image'} className="w-full h-full object-contain" />
+                <img src={img.url} alt={img.alt || 'Gallery image'} className="w-full h-full object-fill" />
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-muted-foreground">No Image</div>
               )}

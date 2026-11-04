@@ -25,7 +25,7 @@ export const FeaturedToursBlock: React.FC<FeaturedToursProps> = ({ title, subtit
                     src={(tourData.heroImage as Media).url || ''}
                     alt={tourData.title || 'Tour image'}
                     fill
-                    className="object-contain transition-transform group-hover:scale-105"
+                    className="object-fill transition-transform group-hover:scale-105"
                   />
                 )}
               </div>
