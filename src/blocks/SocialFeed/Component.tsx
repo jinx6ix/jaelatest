@@ -23,7 +23,7 @@ export const SocialFeedBlock: React.FC<SocialFeedProps> = ({ title, posts }) => 
                 alt="Social media post"
                 width={300}
                 height={300}
-                className="h-full w-full object-cover"
+                className="h-full w-full object-contain"
               />
             )}
           </Link>

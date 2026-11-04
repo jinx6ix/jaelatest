@@ -21,7 +21,7 @@ export const CategoryTilesBlock: React.FC<CategoryTilesProps> = ({ title, catego
                   src={(cat.image as Media).url || ''}
                   alt={cat.title || 'Category image'}
                   fill
-                  className="object-cover transition-transform group-hover:scale-105"
+                  className="object-contain transition-transform group-hover:scale-105"
                 />
               )}
             </div>
