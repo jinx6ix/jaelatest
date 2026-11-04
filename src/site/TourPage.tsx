@@ -464,14 +464,17 @@ export async function TourPage({ ctx, tour }: { ctx: SiteContext; tour: Tour }) 
           <section key="faq" className="jt-block">
             <h2>{s.title || t('faq.title')}</h2>
             {faq.map((q, i) => (
-              <details key={i} className="jt-acc">
-                <summary>
-                  <h2 id={`faq-${tour.slug}-${i}`}>{q.question}</h2>
-                </summary>
-                <div className="jt-acc__body">
-                  <p>{q.answer}</p>
-                </div>
-              </details>
+              <div key={i} className="jt-acc-wrap">
+                <h2 id={`faq-${tour.slug}-${i}`}>{q.question}</h2>
+                <details className="jt-acc">
+                  <summary>
+                    <span>{q.question}</span>
+                  </summary>
+                  <div className="jt-acc__body">
+                    <p>{q.answer}</p>
+                  </div>
+                </details>
+              </div>
             ))}
           </section>
         ) : null
