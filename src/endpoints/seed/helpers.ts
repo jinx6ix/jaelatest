@@ -3,14 +3,14 @@ import type { Payload } from 'payload'
 export const slugify = (s: string) => s.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '')
 
 const textNode = (text: string) => ({ type: 'text', text, detail: 0, format: 0, mode: 'normal', style: '', version: 1 })
-const para = (text: string) => ({ type: 'paragraph', children: [textNode(text)], direction: 'ltr', format: '', indent: 0, textFormat: 0, version: 1 })
-const heading = (text: string, tag = 'h2') => ({ type: 'heading', tag, children: [textNode(text)], direction: 'ltr', format: '', indent: 0, version: 1 })
+const para = (text: string) => ({ type: 'paragraph', children: [textNode(text)], direction: 'ltr', format: 0, indent: 0, version: 1 })
+const heading = (text: string, tag = 'h2') => ({ type: 'heading', tag, children: [textNode(text)], direction: 'ltr', format: 0, indent: 0, version: 1 })
 
 /** Builds Lexical rich text from plain strings. A string starting with "## " becomes a heading. */
 export const lexical = (items: string[]) => ({
   root: {
     type: 'root',
-    format: '',
+    format: 0,
     indent: 0,
     version: 1,
     direction: 'ltr',
