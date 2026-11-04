@@ -24,7 +24,7 @@ export const Tours: CollectionConfig = {
     // ── SAGE / E-E-A-T fields (sidebar) ────────────────────────────────────────
     // Backed by tours.author and tours.published_at columns created by the
     // accompanying SQL. No `payload migrate` needed — Payload reads existing
-    // columns on boot.
+    // columns on boot...
     {
       name: 'author',
       type: 'text',
