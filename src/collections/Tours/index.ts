@@ -20,6 +20,46 @@ export const Tours: CollectionConfig = {
         { name: 'sample', type: 'checkbox', defaultValue: false, admin: { width: '33%', description: 'Sample content. Replace before launch.' } },
       ],
     },
+
+    // ── SAGE / E-E-A-T fields (sidebar) ────────────────────────────────────────
+    // Backed by tours.author and tours.published_at columns created by the
+    // accompanying SQL. No `payload migrate` needed — Payload reads existing
+    // columns on boot.
+    {
+      name: 'author',
+      type: 'text',
+      localized: false,
+      defaultValue: 'JaeTravel Expeditions',
+      admin: {
+        position: 'sidebar',
+        description: 'Author shown to LLMs for E-E-A-T. Rendered as article:author.',
+      },
+    },
+    {
+      name: 'publishedAt',
+      type: 'date',
+      localized: false,
+      admin: {
+        position: 'sidebar',
+        date: { pickerAppearance: 'dayAndTime' },
+        description: 'Publication date for LLM recency. Rendered as <time>.',
+      },
+    },
+
+    // ── Speakable (voice / AI answer readiness) ────────────────────────────────
+    {
+      name: 'speakable',
+      type: 'group',
+      admin: {
+        position: 'sidebar',
+        description: 'CSS selectors for the JSON-LD speakable property. Fallback selector is used if empty.',
+      },
+      fields: [
+        { name: 'cssSelector', type: 'text', defaultValue: '.tour-summary, .tour-itinerary, .tour-faq' },
+        { name: 'url', type: 'text' },
+      ],
+    },
+
     {
       type: 'tabs',
       tabs: [
