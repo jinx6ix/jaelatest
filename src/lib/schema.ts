@@ -118,6 +118,7 @@ export function tourNode(a: {
   validUntil?: string | null
   touristTypes?: string[]
   offer?: { name: string; url: string; fromCents: number; validUntil: string } | null
+  speakable?: { cssSelector?: string | string[] } | null
 }) {
   const offers =
     a.lowCents != null
@@ -157,6 +158,17 @@ export function tourNode(a: {
     brand: { '@id': orgId(a.origin) },
     provider: { '@id': orgId(a.origin) },
     touristType: a.touristTypes,
+    speakable: a.speakable?.cssSelector
+      ? {
+          '@type': 'SpeakableSpecification',
+          cssSelector: Array.isArray(a.speakable.cssSelector)
+            ? a.speakable.cssSelector
+            : [a.speakable.cssSelector],
+        }
+      : {
+          '@type': 'SpeakableSpecification',
+          cssSelector: ['.tour-summary, .tour-itinerary, .tour-faq'],
+        },
     itinerary: a.itinerary.length
       ? {
           '@type': 'ItemList',

@@ -166,36 +166,39 @@ export async function TourPage({ ctx, tour }: { ctx: SiteContext; tour: Tour }) 
         {days.map((d, i) => {
           const hotel = typeof d.hotel === 'object' ? d.hotel : null
           return (
-            <details key={d.id || i} open={i === 0} className="jt-acc">
-              <summary>
-                <span>{t('itinerary.day', { n: i + 1 })}</span> {d.title}
-              </summary>
-              <div className="jt-acc__body">
-                {paragraphs(d.body).map((p, k) => (
-                  <p key={k}>{p}</p>
-                ))}
-                <ul className="jt-daymeta">
-                  {d.driveTime && (
-                    <li>
-                      <IconClock size={14} /> {d.driveTime}
-                    </li>
-                  )}
-                  {hotel?.name && (
-                    <li>
-                      <IconPin size={14} /> {hotel.name}
-                    </li>
-                  )}
-                  {(d.meals || []).length > 0 && (
-                    <li>{(d.meals as string[]).map((m) => t(`meal.${m}` as any)).join(', ')}</li>
-                  )}
-                  {variant === 'accessible' && d.mobilityLevel && (
-                    <li>
-                      <IconWheelchair size={14} /> {t(`mobility.${d.mobilityLevel}` as any)}
-                    </li>
-                  )}
-                </ul>
-              </div>
-            </details>
+            <div key={d.id || i} className="jt-acc-wrap">
+              <h3 id={`step-${tour.slug}-${i + 1}`}>{d.title}</h3>
+              <details open={i === 0} className="jt-acc">
+                <summary>
+                  <span>{t('itinerary.day', { n: i + 1 })}</span>
+                </summary>
+                <div className="jt-acc__body">
+                  {paragraphs(d.body).map((p, k) => (
+                    <p key={k}>{p}</p>
+                  ))}
+                  <ul className="jt-daymeta">
+                    {d.driveTime && (
+                      <li>
+                        <IconClock size={14} /> {d.driveTime}
+                      </li>
+                    )}
+                    {hotel?.name && (
+                      <li>
+                        <IconPin size={14} /> {hotel.name}
+                      </li>
+                    )}
+                    {(d.meals || []).length > 0 && (
+                      <li>{(d.meals as string[]).map((m) => t(`meal.${m}` as any)).join(', ')}</li>
+                    )}
+                    {variant === 'accessible' && d.mobilityLevel && (
+                      <li>
+                        <IconWheelchair size={14} /> {t(`mobility.${d.mobilityLevel}` as any)}
+                      </li>
+                    )}
+                  </ul>
+                </div>
+              </details>
+            </div>
           )
         })}
         <p className="jt-actions">
@@ -462,7 +465,9 @@ export async function TourPage({ ctx, tour }: { ctx: SiteContext; tour: Tour }) 
             <h2>{s.title || t('faq.title')}</h2>
             {faq.map((q, i) => (
               <details key={i} className="jt-acc">
-                <summary>{q.question}</summary>
+                <summary>
+                  <h2 id={`faq-${tour.slug}-${i}`}>{q.question}</h2>
+                </summary>
                 <div className="jt-acc__body">
                   <p>{q.answer}</p>
                 </div>
@@ -531,6 +536,9 @@ export async function TourPage({ ctx, tour }: { ctx: SiteContext; tour: Tour }) 
               validUntil: String(offer.validUntil).slice(0, 10),
             }
           : null,
+      speakable: {
+        cssSelector: (tour as any).speakable?.cssSelector || '.tour-summary, .tour-itinerary, .tour-faq',
+      },
     }),
     heroImg
       ? imageNode({
