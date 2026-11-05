@@ -8,6 +8,7 @@ import { getDictionary, type Dict } from '@/i18n'
 import { mediaUrl } from './media'
 import type { Company, Offer, Post, SiteSetting, Tour, Vehicle, JointDeparture, GalleryItem, Destination, Season, Theme } from '@/payload-types'
 import type { SeasonLite } from './pricing'
+import { toKebabCase } from '@/utilities/toKebabCase'
 
 export const getPayloadClient = () => getPayload({ config: configPromise })
 
@@ -121,8 +122,7 @@ export const getDestinations = cache(async (locale: string): Promise<Destination
 
 const startOfToday = () => {
   const d = new Date()
-  d.setHours(0, 0, 0, 0)
-  return d.toISOString()
+  return new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate())).toISOString()
 }
 
 export const getUpcomingDepartures = async (locale: string, opts: { tourId?: string | number; limit?: number } = {}): Promise<JointDeparture[]> => {
@@ -144,15 +144,44 @@ export const getUpcomingDepartures = async (locale: string, opts: { tourId?: str
 
 export const getDepartureBySlug = cache(async (locale: string, slug: string): Promise<JointDeparture | null> => {
   const payload = await getPayloadClient()
-  const res = await payload.find({
+  const decoded = decodeURIComponent(slug).trim()
+  const normalized = toKebabCase(decoded)
+
+  let res = await payload.find({
     collection: 'joint-departures',
-    where: { and: [{ slug: { equals: slug } }, PUBLISHED] },
+    where: { and: [{ slug: { equals: decoded } }, PUBLISHED] },
     limit: 1,
     depth: 2,
     locale: locale as any,
     overrideAccess: true,
   })
-  return (res.docs[0] as JointDeparture) ?? null
+  if (res.docs[0]) return res.docs[0] as JointDeparture
+
+  if (normalized !== decoded) {
+    res = await payload.find({
+      collection: 'joint-departures',
+      where: { and: [{ slug: { equals: normalized } }, PUBLISHED] },
+      limit: 1,
+      depth: 2,
+      locale: locale as any,
+      overrideAccess: true,
+    })
+    if (res.docs[0]) return res.docs[0] as JointDeparture
+  }
+
+  const all = await payload.find({
+    collection: 'joint-departures',
+    where: PUBLISHED,
+    limit: 200,
+    depth: 2,
+    locale: locale as any,
+    overrideAccess: true,
+  })
+  const found = all.docs.find((d: any) => {
+    const s = d.slug ? toKebabCase(d.slug) : ''
+    return s === normalized || d.slug === decoded || toKebabCase(decodeURIComponent(d.slug || '')) === normalized
+  })
+  return (found as JointDeparture) ?? null
 })
 
 export const getActiveOffers = async (locale: string, opts: { limit?: number; tourId?: string | number; featured?: boolean } = {}): Promise<Offer[]> => {

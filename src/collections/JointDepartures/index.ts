@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 import { publishedOrAuth } from '@/access/publishedOrAuth'
 import { authenticated } from '@/access/authenticated'
 import { revalidateCollection, revalidateCollectionDelete } from '@/hooks/revalidateSite'
+import { toKebabCase } from '@/utilities/toKebabCase'
 
 export const JointDepartures: CollectionConfig = {
   slug: 'joint-departures',
@@ -15,6 +16,9 @@ export const JointDepartures: CollectionConfig = {
           const tourId = typeof data.tour === 'object' ? data.tour.id : data.tour
           const tour = await req.payload.findByID({ collection: 'tours', id: tourId, depth: 0, req })
           data.slug = `${tour.slug}-${String(data.startDate).slice(0, 10)}`
+        }
+        if (data && data.slug) {
+          data.slug = toKebabCase(data.slug)
         }
         return data
       },

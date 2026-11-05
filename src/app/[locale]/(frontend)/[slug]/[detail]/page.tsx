@@ -43,7 +43,9 @@ export default async function DetailRoute(args: Args) {
     return <OfferPage ctx={ctx} offer={doc} />
   }
   if (collection === 'joint-departures') {
-    if (new Date(doc.startDate) < new Date(new Date().setHours(0, 0, 0, 0)) || doc.status === 'cancelled') notFound()
+    const todayStr = new Date().toISOString().slice(0, 10)
+    const depDateStr = doc.startDate ? new Date(doc.startDate).toISOString().slice(0, 10) : ''
+    if ((depDateStr && depDateStr < todayStr) || doc.status === 'cancelled') notFound()
     return <DeparturePage ctx={ctx} dep={doc} />
   }
   if (collection === 'vehicles') return <VehiclePage ctx={ctx} v={doc} />
