@@ -2,8 +2,9 @@ import React from 'react'
 import Link from 'next/link'
 import { cachedGlobal } from '@/lib/globals'
 import { resolveLink } from '@/lib/routes'
+import { mediaUrl } from '@/lib/media'
 import type { SiteContext } from '@/lib/site'
-import { IconPin } from './Icons'
+import { IconPin, SOCIAL_ICONS } from './Icons'
 import { makeT } from '@/i18n'
 
 const SOCIAL_LABEL: Record<string, string> = { facebook: 'Facebook', instagram: 'Instagram', youtube: 'YouTube', tiktok: 'TikTok', x: 'X', linkedin: 'LinkedIn', tripadvisor: 'Tripadvisor' }
@@ -45,13 +46,16 @@ export async function Footer({ ctx }: { ctx: SiteContext }) {
           </address>
           {(ctx.site?.social || []).length > 0 && (
             <ul className="jt-footer__social" aria-label={t('footer.social')}>
-              {(ctx.site.social || []).map((s: any) => (
-                <li key={s.id || s.url}>
-                  <a href={s.url} rel="me noopener" target="_blank">
-                    {SOCIAL_LABEL[s.platform] || s.platform}
-                  </a>
-                </li>
-              ))}
+              {(ctx.site.social || []).map((s: any) => {
+                const IconComp = SOCIAL_ICONS[s.platform]
+                return (
+                  <li key={s.id || s.url}>
+                    <a href={s.url} rel="me noopener" target="_blank" title={SOCIAL_LABEL[s.platform] || s.platform}>
+                      {IconComp ? <IconComp size={20} /> : (SOCIAL_LABEL[s.platform] || s.platform)}
+                    </a>
+                  </li>
+                )
+              })}
             </ul>
           )}
         </div>
@@ -68,6 +72,64 @@ export async function Footer({ ctx }: { ctx: SiteContext }) {
           </nav>
         ))}
       </div>
+      {((footer?.partners || []).length > 0 || (footer?.reviews || []).length > 0) && (
+        <div className="jt-wrap jt-footer__sections">
+          {(footer?.partners || []).length > 0 && (
+            <div className="jt-footer__section">
+              <h3>Official Partners & Affiliations</h3>
+              <div className="jt-footer__logos">
+                {(footer.partners || []).map((p: any, i: number) => {
+                  const imgUrl = mediaUrl(p.logo, 'small')
+                  const content = imgUrl ? (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img src={imgUrl} alt={p.name} title={p.name} className="jt-footer__logo-img" />
+                  ) : (
+                    p.name
+                  )
+                  return (
+                    <div key={i} className="jt-footer__logo-item">
+                      {p.url ? (
+                        <a href={p.url} target="_blank" rel="noopener noreferrer">
+                          {content}
+                        </a>
+                      ) : (
+                        content
+                      )}
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          )}
+          {(footer?.reviews || []).length > 0 && (
+            <div className="jt-footer__section">
+              <h3>Customer Reviews & Widgets</h3>
+              <div className="jt-footer__logos">
+                {(footer.reviews || []).map((r: any, i: number) => {
+                  const imgUrl = mediaUrl(r.logo, 'small')
+                  const content = imgUrl ? (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img src={imgUrl} alt={r.name} title={r.name} className="jt-footer__logo-img" />
+                  ) : (
+                    r.name
+                  )
+                  return (
+                    <div key={i} className="jt-footer__logo-item">
+                      {r.url ? (
+                        <a href={r.url} target="_blank" rel="noopener noreferrer">
+                          {content}
+                        </a>
+                      ) : (
+                        content
+                      )}
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
       {(c?.credentials || []).length > 0 && (
         <div className="jt-wrap jt-footer__creds">
           {(c.credentials || []).map((x: any, i: number) => (

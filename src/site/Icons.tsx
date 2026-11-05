@@ -75,3 +75,35 @@ export const ICONS: Record<string, React.FC<P>> = {
   users: IconUsers,
   gift: IconGift,
 }
+
+export const IconFacebook = ({ size, className }: P) => (
+  <svg {...base(size)} className={className} fill="currentColor" stroke="none"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+)
+export const IconInstagram = ({ size, className }: P) => (
+  <svg {...base(size)} className={className}><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+)
+export const IconYoutube = ({ size, className }: P) => (
+  <svg {...base(size)} className={className} fill="currentColor" stroke="none"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.56 49.56 0 0 1-16.2 0A2 2 0 0 1 2.5 17M10 15l5-3-5-3z"/></svg>
+)
+export const IconTiktok = ({ size, className }: P) => (
+  <svg {...base(size)} className={className} fill="currentColor" stroke="none"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
+)
+export const IconTwitterX = ({ size, className }: P) => (
+  <svg {...base(size)} className={className} fill="currentColor" stroke="none"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+)
+export const IconLinkedin = ({ size, className }: P) => (
+  <svg {...base(size)} className={className} fill="currentColor" stroke="none"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+)
+export const IconTripadvisor = ({ size, className }: P) => (
+  <svg {...base(size)} className={className} fill="currentColor" stroke="none"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 15a5 5 0 1 1 5-5 5 5 0 0 1-5 5zm0-8a3 3 0 1 0 3 3 3 3 0 0 0-3-3 z"/></svg>
+)
+
+export const SOCIAL_ICONS: Record<string, React.FC<P>> = {
+  facebook: IconFacebook,
+  instagram: IconInstagram,
+  youtube: IconYoutube,
+  tiktok: IconTiktok,
+  x: IconTwitterX,
+  linkedin: IconLinkedin,
+  tripadvisor: IconTripadvisor,
+}
